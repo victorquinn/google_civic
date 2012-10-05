@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file Google Civic module
+ * Responsible for Google Civic Drupal hook implementations.
+ */
+
+/**
+ * Implements Drupal's hook_menu().
+ */
+function google_civic_menu() {
+  $items['admin/google_civic/settings'] = array(
+    'title' => 'Google Civic Settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('google_civic_settings_form'),
+    'access arguments' => array('administer google civic'),
+    'description' => t('Administer Google Civic.'),
+    'file' => 'google_civic.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements Drupal's hook_perm().
+ */
+function google_civic_perm() {
+  $perms = array(
+    'administer google civic'
+  );
+
+  return $perms;
+}
