@@ -19,6 +19,14 @@ function google_civic_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['google_civic/where-do-I-vote'] = array(
+    'title' => 'Google Civic Voter Info',
+    'page callback' => 'google_civic_voterinfo',
+    'access arguments' => array('view google civic voterinfo'),
+    'file' => 'google_civic.voterinfo.inc',
+    'description' => t('Google Civic Voter Information View.'),
+  );
+
   return $items;
 }
 
@@ -27,8 +35,75 @@ function google_civic_menu() {
  */
 function google_civic_perm() {
   $perms = array(
-    'administer google civic'
+    'administer google civic',
+    'view google civic voterinfo'
   );
 
   return $perms;
 }
+
+/**
+ * Implements Drupal's hook_block().
+ */
+function google_civic_block($op = 'list', $delta = 0, $edit = array()) {
+  module_load_include('inc', 'google_civic', 'google_civic.block');
+
+  switch ($op) {
+    case 'list':
+      return google_civic_block_list();
+    case 'configure':
+    case 'save':
+      break;
+    case 'view':
+      return google_civic_block_view($delta);
+    default:
+      break;
+  }
+}
+
+/**
+ * Implements Drupal's hook_theme().
+ */
+function google_civic_theme($existing, $type, $theme, $path) {
+  $tpls_dir = drupal_get_path('module', 'google_civic') . '/tpls';
+
+  $templates = array(
+    'google_civic-block-address' => array(
+      'arguments' => array(
+        'address_form' => '',
+      ),
+      'path' => $tpls_dir,
+      'template' => 'google_civic-block-address',
+    ),
+    'google_civic-voterinfo' => array(
+      'arguments' => array(
+        'title' => '',
+        'locations' => '',
+        'election_info_link' => '',
+      ),
+      'path' => $tpls_dir,
+      'template' => 'google_civic-voterinfo',
+    ),
+  );
+
+  return $templates;
+}
+
+/** Form wrapping */
+
+/**
+ * @see _google_civic_address_form (google_civic.forms.inc).
+ */
+function google_civic_address_form() {
+  module_load_include('inc', 'google_civic', 'google_civic.forms');
+  return _google_civic_address_form();
+}
+
+/**
+ * @see _google_civic_address_form_submit (google_civic.forms.inc).
+ */
+function google_civic_address_form_submit($form, &$form_state) {
+  module_load_include('inc', 'google_civic', 'google_civic.forms');
+  _google_civic_address_form_submit($form, $form_state);
+}
+

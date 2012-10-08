@@ -3,4 +3,5 @@ description = Drupal module for Google Civic API interactivity.
 core = 6.x
 package = Google API
 group = Google API
+dependencies[] = gmap
 

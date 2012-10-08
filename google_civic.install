@@ -10,6 +10,7 @@
  */
 function google_civic_install() {
   variable_set('google_civic_key', '');
+  variable_set('google_civic_election_year', '');
 }
 
 /**
@@ -17,4 +18,5 @@ function google_civic_install() {
  */
 function google_civic_uninstall() {
   variable_del('google_civic_key');
+  variable_del('google_civic_election_year');
 }
