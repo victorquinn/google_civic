@@ -17,11 +17,13 @@ function _google_civic_address_form() {
     '#type' => 'textfield',
     '#title' => t('Street Address'),
     '#description' => t('Enter your address to find your polling place.'),
+    '#required' => TRUE,
   );
 
-  $form['google_civic_address']['submit'] = array(
+  $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Submit'),
+    '#weight' => 100,
   );
 
   $form['#submit'][] = 'google_civic_address_form_submit';
