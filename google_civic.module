@@ -101,11 +101,3 @@ function google_civic_address_form() {
   return _google_civic_address_form();
 }
 
-/**
- * @see _google_civic_address_form_submit (google_civic.forms.inc).
- */
-function google_civic_address_form_submit($form, &$form_state) {
-  module_load_include('inc', 'google_civic', 'google_civic.forms');
-  _google_civic_address_form_submit($form, $form_state);
-}
-

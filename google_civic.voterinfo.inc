@@ -8,12 +8,12 @@
  *   The voterinfo view rendered as HTML.
  */
 function google_civic_voterinfo() {
-  $election_id = (int) variable_get('google_civic_election_id', '');
-  $address = check_plain($_GET['address']);
-
-  if (!$address) {
+  if (!$_POST) {
     return drupal_get_form('google_civic_address_form');
   }
+
+  $election_id = (int) variable_get('google_civic_election_id', '');
+  $address = check_plain($_POST['address_field']);
 
   $response = google_civic_request_voterinfo($election_id, $address);
   $title = count($response->pollingLocations) == 1 ? 'Polling Location' :

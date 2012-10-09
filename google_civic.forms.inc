@@ -26,16 +26,9 @@ function _google_civic_address_form() {
     '#weight' => 100,
   );
 
-  $form['#submit'][] = 'google_civic_address_form_submit';
+  $form['#action'] = url('google_civic/wheredoivote');
+  $form['#redirect'] = FALSE;
 
   return $form;
-}
-
-/**
- * Implements Drupal's hook_form_ID_submit().
- */
-function _google_civic_address_form_submit($form, &$form_state) {
-  $query = array('address' => $form_state['values']['address_field'],);
-  drupal_goto('google_civic/wheredoivote', $query);
 }
 
