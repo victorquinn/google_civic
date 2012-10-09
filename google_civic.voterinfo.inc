@@ -12,6 +12,9 @@ function google_civic_voterinfo() {
     return drupal_get_form('google_civic_address_form');
   }
 
+  drupal_add_css(drupal_get_path('module', 'google_civic')
+                  . '/css/google_civic.css');
+
   $election_id = (int) variable_get('google_civic_election_id', '');
   $address = check_plain($_POST['address_field']);
 

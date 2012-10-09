@@ -1,0 +1,6 @@
+#google_civic-voterinfo .locality,
+#google_civic-voterinfo .region,
+#google_civic-voterinfo .postal-code,
+#google_civic-voterinfo .country-name {
+  display: inline-block;
+}
