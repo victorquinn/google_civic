@@ -8,10 +8,10 @@
  *   The voterinfo view rendered as HTML.
  */
 function google_civic_voterinfo() {
-  $election_year = _google_civic_get_election_year();
+  $election_id = (int) variable_get('google_civic_election_id', '');
   $address = check_plain($_GET['address']);
 
-  $response = google_civic_request_voterinfo($election_year, $address);
+  $response = google_civic_request_voterinfo($election_id, $address);
   $title = count($response->pollingLocations) == 1 ? 'Polling Location' :
                                                      'Polling Locations';
 
@@ -31,10 +31,10 @@ function google_civic_voterinfo() {
 /**
  * @see GoogleCivicAPI::request_voterinfo (google_civic.google.php)
  */
-function google_civic_request_voterinfo($election_year, $address) {
+function google_civic_request_voterinfo($election_id, $address) {
   module_load_include('inc', 'google_civic', 'google_civic.google');
   $api = google_civic_get_api();
-  $response = $api->request_voterinfo($election_year, $address);
+  $response = $api->request_voterinfo($election_id, $address);
   return $response;
 }
 
@@ -125,19 +125,6 @@ function google_civic_location_poll_time($location) {
   $poll_times[] = trim($polling_hours[0]);
   $poll_times[] = trim($polling_hours[1]);
   return $poll_times;
-}
-
-/**
- * Gets the admin-set election year.
- *
- * @return int
- *   The admin-set election year.
- */
-function _google_civic_get_election_year() {
-  $election_date = variable_get('google_civic_election_date',
-                                '2012-11-06 00:00:00');
-  $year = substr($election_date, 0, 4);
-  return (int) $year;
 }
 
 /**

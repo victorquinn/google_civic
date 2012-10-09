@@ -69,8 +69,8 @@ class GoogleCivicAPI {
   /**
    * Requests voterinfo for an address for a given year.
    *
-   * @param int $year
-   *   A year (for which to request voter information).
+   * @param int $election_id
+   *   An ID (of the election to request voter information).
    * @param string $address
    *   An address (for which to request voter information).
    *
@@ -78,16 +78,12 @@ class GoogleCivicAPI {
    *   The voter information reponse from Google Civic for the requested
    *   year and address--or NULL in case of failure.
    */
-  public function request_voterinfo($year, $address) {
-    if (!is_int($year)) {
+  public function request_voterinfo($election_id, $address) {
+    if (!is_int($election_id)) {
       return NULL;
     }
 
-    if (strlen($year) != 4) {
-      return NULL;
-    }
-
-    $url = sprintf("%s/voterinfo/%d/lookup", GOOGLE_CIVIC_API, $year);
+    $url = sprintf("%s/voterinfo/%d/lookup", GOOGLE_CIVIC_API, $election_id);
     $payload = array('address' => $address,);
 
     return $this->request($url, $payload);

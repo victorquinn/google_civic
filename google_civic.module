@@ -9,7 +9,7 @@
  * Implements Drupal's hook_menu().
  */
 function google_civic_menu() {
-  $items['admin/google_civic/settings'] = array(
+  $items['admin/settings/google_civic'] = array(
     'title' => 'Google Civic Settings',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('google_civic_settings_form'),

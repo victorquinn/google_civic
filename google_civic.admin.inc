@@ -21,12 +21,19 @@ function google_civic_settings_form() {
     '#description' => t('Enter your Google Civic API Key.'),
   );
 
+  $form['google_civic_election_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Google Civic Election ID'),
+    '#default_value' => variable_get('google_civic_election_id', ''),
+    '#description' => t('Enter the Google Civic election ID to use '
+                      . 'when issuing Google Civic requests.'),
+  );
+
   $form['google_civic_election_date'] = array(
     '#type' => 'date_select',
     '#title' => t('Election Day'),
     '#default_value' => variable_get('google_civic_election_year', ''),
-    '#description' => t('Enter the election date to use when issuing '
-                      . 'Google Civic requests.'),
+    '#description' => t('Enter the election date (for display).'),
   );
 
   return system_settings_form($form);
