@@ -14,8 +14,8 @@ function _google_civic_address_form() {
   $form = array();
 
   $form['google_civic_address']['address_field'] = array(
-    '#type' => 'textarea',
-    '#title' => t('Address'),
+    '#type' => 'textfield',
+    '#title' => t('Street Address'),
     '#description' => t('Enter your address to find your polling place.'),
   );
 
@@ -36,3 +36,4 @@ function _google_civic_address_form_submit($form, &$form_state) {
   $query = array('address' => $form_state['values']['address_field'],);
   drupal_goto('google_civic/where-do-I-vote', $query);
 }
+
