@@ -19,12 +19,13 @@ function google_civic_voterinfo() {
                                           $response->pollingLocations);
 
   $election_info_link = google_civic_voterinfo_response_get_link($response);
+  $election_date = _google_civic_get_election_date_string();
 
   module_load_include('inc', 'google_civic', 'google_civic.map');
   $map = google_civic_map($address, $locations);
 
   return theme('google_civic-voterinfo', $title, $locations, $map,
-               $election_info_link);
+               $election_info_link, $election_date);
 }
 
 /**
@@ -58,9 +59,12 @@ function google_civic_locations_response_massage($locations_response) {
   module_load_include('inc', 'google_civic', 'google_civic.map');
 
   foreach($locations_response as &$location) {
-    $address = google_civic_translate_address_response($location->address);
-    $marker = google_civic_address_marker($address);
-    $location->marker = $marker;
+    $location->marker = google_civic_location_marker($location);
+    list($start_time, $end_time) = google_civic_location_poll_time($location);
+
+    $location->opening_time = $start_time;
+    $location->closing_time = $end_time;
+
     $locations[] = $location;
   }
   return $locations;
@@ -87,6 +91,43 @@ function google_civic_voterinfo_response_get_link($voterinfo_response) {
 }
 
 /**
+ * Gets a GMap-style map marker for a Google Civic location.
+ *
+ * @param Object $location
+ *   A Google Civic location (from a voterinfo response).
+ *
+ * @return Array
+ *   A GMap-style map marker.
+ */
+function google_civic_location_marker($location) {
+  $address = google_civic_translate_address_response($location->address);
+  $marker = google_civic_address_marker($address);
+  return $marker;
+}
+
+/**
+ * Gets the opening / closing times for a Google Civic polling location.
+ *
+ * @param Object $location
+ *   A Google Civic polling location (from a voterinfo response).
+ *
+ * @return Array
+ *   Two strings--the opening / closing times.
+ */
+function google_civic_location_poll_time($location) {
+  $polling_hours = explode('-', $location->pollingHours);
+
+  if (count($polling_hours) != 2) {
+    return NULL;
+  }
+
+  $poll_times = array();
+  $poll_times[] = trim($polling_hours[0]);
+  $poll_times[] = trim($polling_hours[1]);
+  return $poll_times;
+}
+
+/**
  * Gets the admin-set election year.
  *
  * @return int
@@ -98,3 +139,18 @@ function _google_civic_get_election_year() {
   $year = substr($election_date, 0, 4);
   return (int) $year;
 }
+
+/**
+ * Gets the admin-set election date as a formatted string for display.
+ *
+ * @return string
+ *   The admin-set election date--formatted for display.
+ */
+function _google_civic_get_election_date_string() {
+  $election_date = variable_get('google_civic_election_date',
+                                '2012-11-06 00:00:00');
+  $election_time = strtotime($election_date);
+  $election_date = strftime('%B %e', $election_time);
+  return $election_date;
+}
+

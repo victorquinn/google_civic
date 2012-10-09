@@ -5,7 +5,8 @@
  */
 ?>
 
-<h1><?php print $title; ?></h1>
+<h1>Your <?php print $title; ?> for the <?php print $election_date; ?> Election:</h1>
+<div id="google_civic-voterinfo">
 <?php if ($locations) : ?>
   <?php foreach ($locations as $location) : ?>
   <div class="google_civic-polling-location vcard">
@@ -20,9 +21,14 @@
       </div>
     </div>
   </div>
-  <div class="google_civic-polling-hours"><?php print $location->pollingHours; ?></div>
+  <div class="google_civic-polling-hours">
+    <p>Polls are open from <span class="google_civic-poll-opening-time"><?php print $location->opening_time; ?></span> - <span class="google_civic-poll-closing-time"><?php print $location->closing_time; ?></span></p>
+  </div>
   <?php endforeach; ?>
   <div><?php print $map; ?></div>
-  <div>Election Info: <?php print $election_info_link; ?></div>
+  <div>For more information, visit: <?php print $election_info_link; ?></div>
+<?php else: ?>
+<p>Sorry.  We are unable to find a polling location for your address.</p>
 <?php endif; ?>
+</div>
 
