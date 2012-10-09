@@ -19,6 +19,8 @@ function google_civic_voterinfo() {
   $address = check_plain($_POST['address_field']);
 
   $response = google_civic_request_voterinfo($election_id, $address);
+  module_invoke_all('google_civic_voterinfo', $response);
+
   $title = count($response->pollingLocations) == 1 ? 'Polling Location' :
                                                      'Polling Locations';
 
