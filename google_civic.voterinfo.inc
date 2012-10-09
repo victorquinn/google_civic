@@ -8,7 +8,7 @@
  *   The voterinfo view rendered as HTML.
  */
 function google_civic_voterinfo() {
-  $election_year = (int) variable_get('google_civic_election_year', 2012);
+  $election_year = _google_civic_get_election_year();
   $address = check_plain($_GET['address']);
 
   $response = google_civic_request_voterinfo($election_year, $address);
@@ -86,3 +86,15 @@ function google_civic_voterinfo_response_get_link($voterinfo_response) {
   return $election_info_link;
 }
 
+/**
+ * Gets the admin-set election year.
+ *
+ * @return int
+ *   The year admin-set election year.
+ */
+function _google_civic_get_election_year() {
+  $election_date = variable_get('google_civic_election_date',
+                                '2012-11-06 00:00:00');
+  $year = substr($election_date, 0, 4);
+  return (int) $year;
+}
