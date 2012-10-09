@@ -20,7 +20,10 @@ function google_civic_voterinfo() {
 
   $election_info_link = google_civic_voterinfo_response_get_link($response);
 
-  return theme('google_civic-voterinfo', $title, $locations,
+  module_load_include('inc', 'google_civic', 'google_civic.map');
+  $map = google_civic_map($address, $locations);
+
+  return theme('google_civic-voterinfo', $title, $locations, $map,
                $election_info_link);
 }
 
@@ -51,10 +54,13 @@ function google_civic_locations_response_massage($locations_response) {
     return $locations;
   }
 
+  module_load_include('inc', 'google_civic', 'google_civic.google');
+  module_load_include('inc', 'google_civic', 'google_civic.map');
+
   foreach($locations_response as &$location) {
-    module_load_include('inc', 'google_civic', 'google_civic.google');
-    $map = google_civic_map_location_response($location);
-    $location->map = $map;
+    $address = google_civic_translate_address_response($location->address);
+    $marker = google_civic_address_marker($address);
+    $location->marker = $marker;
     $locations[] = $location;
   }
   return $locations;

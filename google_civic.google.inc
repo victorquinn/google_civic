@@ -40,23 +40,3 @@ function google_civic_translate_address_response($address_response) {
   return $address;
 }
 
-/**
- * Gets a Google Map for a Google Civic location.
- *
- * @param Object $location_response
- *   A location object from the Google Civic API.
- *
- * @return GMap
- *   A Simple GMap--corresponding to the $location_response.
- */
-function google_civic_map_location_response($location_response) {
-  $address = google_civic_translate_address_response(
-                                       $location_resposne->address);
-
-  $geocode_data = gmap_geocode($address);
-  $map = gmap_simple_map($geocode_data['latitude'],
-                         $geocode_data['longitude']);
-
-  return $map;
-}
-

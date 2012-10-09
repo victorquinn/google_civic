@@ -21,8 +21,8 @@
     </div>
   </div>
   <div class="google_civic-polling-hours"><?php print $location->pollingHours; ?></div>
-  <div><?php print $location->map; ?></div>
-  <div>Election Info: <?php print $election_info_link; ?></div>
   <?php endforeach; ?>
+  <div><?php print $map; ?></div>
+  <div>Election Info: <?php print $election_info_link; ?></div>
 <?php endif; ?>
 
