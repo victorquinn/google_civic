@@ -34,6 +34,6 @@ function _google_civic_address_form() {
  */
 function _google_civic_address_form_submit($form, &$form_state) {
   $query = array('address' => $form_state['values']['address_field'],);
-  drupal_goto('google_civic/where-do-I-vote', $query);
+  drupal_goto('google_civic/wheredoivote', $query);
 }
 

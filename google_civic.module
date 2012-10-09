@@ -19,7 +19,7 @@ function google_civic_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
-  $items['google_civic/where-do-I-vote'] = array(
+  $items['google_civic/wheredoivote'] = array(
     'title' => 'Google Civic Voter Info',
     'page callback' => 'google_civic_voterinfo',
     'access arguments' => array('view google civic voterinfo'),
