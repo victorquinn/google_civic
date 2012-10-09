@@ -11,6 +11,10 @@ function google_civic_voterinfo() {
   $election_id = (int) variable_get('google_civic_election_id', '');
   $address = check_plain($_GET['address']);
 
+  if (!$address) {
+    return drupal_get_form('google_civic_address_form');
+  }
+
   $response = google_civic_request_voterinfo($election_id, $address);
   $title = count($response->pollingLocations) == 1 ? 'Polling Location' :
                                                      'Polling Locations';
