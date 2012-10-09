@@ -131,7 +131,7 @@ function google_civic_location_poll_time($location) {
  * Gets the admin-set election year.
  *
  * @return int
- *   The year admin-set election year.
+ *   The admin-set election year.
  */
 function _google_civic_get_election_year() {
   $election_date = variable_get('google_civic_election_date',
