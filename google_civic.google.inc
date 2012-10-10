@@ -14,7 +14,7 @@
  *   A GoogleCivicAPI instantiated with $api_key.
  */
 function google_civic_get_api($api_key = NULL) {
-  module_load_include('php', 'google_civic', 'google_civic.google');
+  module_load_include('php', 'google_civic', 'GoogleCivicAPI.class');
   $api_key = $api_key ? $api_key : variable_get('google_civic_key', '');
   return new GoogleCivicAPI($api_key);
 }
@@ -29,19 +29,15 @@ function google_civic_get_api($api_key = NULL) {
  *   The address object as an address string.
  */
 function google_civic_translate_address_response($address_response) {
-  /**
-   * coderev-google_civic
-   * Let's call this function google_civic_format_address
-   * Also, $address_array is a bit imprecise - rename to $address_parts.
-   */
-  $address_array[] = $address_response->locationName;
-  $address_array[] = $address_response->line1;
-  $address_array[] = $address_response->line2;
-  $address_array[] = $address_response->line3;
-  $address_array[] = $address_response->city;
-  $address_array[] = $address_response->state;
-  $address_array[] = $address_response->zip;
-  $address = join(' ', $address_array);
+  $address_parts = array();
+  $address_parts[] = $address_response->locationName;
+  $address_parts[] = $address_response->line1;
+  $address_parts[] = $address_response->line2;
+  $address_parts[] = $address_response->line3;
+  $address_parts[] = $address_response->city;
+  $address_parts[] = $address_response->state;
+  $address_parts[] = $address_response->zip;
+  $address = join(' ', $address_parts);
   return $address;
 }
 

@@ -8,55 +8,41 @@
  *   The voterinfo view rendered as HTML.
  */
 function google_civic_voterinfo() {
-  /**
-   * coderev-google_civic
-   * Actually, let's keep the form on the page both before and after the submit.
-   * If the user has submitted the form, then displaying the form (below the
-   * polling place info) will allow the user to easily look up another polling
-   * place, correct a mistake in her home address, etc.
-   */
+  $address_form = drupal_get_form('google_civic_address_form');
+
   if (!$_POST) {
-    return drupal_get_form('google_civic_address_form');
+    return $address_form;
   }
 
   drupal_add_css(drupal_get_path('module', 'google_civic')
                   . '/css/google_civic.css');
 
   $election_id = (int) variable_get('google_civic_election_id', '');
-  
-  /**
-   * coderev-google_civic 
-   * Shouldn't this response stuff be in a _submit hook?
-   */
+
   $address = check_plain($_POST['address_field']);
 
   $response = google_civic_request_voterinfo($election_id, $address);
   module_invoke_all('google_civic_voterinfo', $response);
 
-  /**
-   * coderev-google_civic
-   * Use format_plural to output nouns that may be plural
-   */
-  $title = count($response->pollingLocations) == 1 ? 'Polling Location' :
-                                                     'Polling Locations';
+  $election_date = _google_civic_format_election_date();
+  $headline = format_plural(count($response->pollingLocations),
+        'Your Polling Location for the !election_date Election:',
+        'Your Polling Locations for the !election_date Election:',
+        array('!election_date' => $election_date,));
 
   $locations = google_civic_locations_response_massage(
                                           $response->pollingLocations);
+  $early_locations = google_civic_locations_response_massage(
+                                          $response->earlyVoteSites);
 
   $election_info_link = google_civic_voterinfo_response_get_link($response);
-  $election_date = _google_civic_get_election_date_string();
 
-  /**
-   * coderev-google_civic
-   * Seems like we're not displaying home address or early vote locations? 
-   */
   module_load_include('inc', 'google_civic', 'google_civic.map');
-  $map = google_civic_map($address, $locations);
+  $map = google_civic_map($address, array_merge($locations, $early_locations));
 
-  $extra_data = module_invoke_all('google_civic_voterinfo');
-
-  return theme('google_civic-voterinfo', $title, $locations, $map,
-               $election_info_link, $election_date, $extra_data);
+  return theme('google_civic_voterinfo', $headline, $locations,
+               $early_locations, $map, $election_info_link, $extra_data,
+               $address_form);
 }
 
 /**
@@ -71,7 +57,8 @@ function google_civic_request_voterinfo($election_id, $address) {
 
 /**
  * Massages the pollingLocations of the voterinfo response to include
- * a Google Map as part of the location.
+ * a Google Map as part of the location and extracts opening / closing
+ * times.
  *
  * @param Array $locations_response
  *   A pollingLocations array from a voterinfo response.
@@ -81,18 +68,11 @@ function google_civic_request_voterinfo($election_id, $address) {
  *   polling location.
  */
 function google_civic_locations_response_massage($locations_response) {
-  /**
-   * coderev-google_civic
-   * "Massage" is a vague name - change to _add_markers_and_poll_time if you
-   * like. 
-   */
-  
   $locations = array();
   if (!$locations_response) {
     return $locations;
   }
 
-  module_load_include('inc', 'google_civic', 'google_civic.google');
   module_load_include('inc', 'google_civic', 'google_civic.map');
 
   foreach($locations_response as &$location) {
@@ -121,12 +101,13 @@ function google_civic_voterinfo_response_get_link($voterinfo_response) {
     return NULL;
   }
 
-  /**
-   * coderev-google_civic
-   * What if no electionInfoUrl is provided? 
-   */
   $election_info_url = $voterinfo_response->state[0]->local_jurisdiction->
                         electionAdministrationBody->electionInfoUrl;
+
+  if (!$election_info_url) {
+    return NULL;
+  }
+
   $election_info_link = l($election_info_url, $election_info_url);
   return $election_info_link;
 }
@@ -141,6 +122,8 @@ function google_civic_voterinfo_response_get_link($voterinfo_response) {
  *   A GMap-style map marker.
  */
 function google_civic_location_marker($location) {
+  module_load_include('inc', 'google_civic', 'google_civic.google');
+
   $address = google_civic_translate_address_response($location->address);
   $marker = google_civic_address_marker($address);
   return $marker;
@@ -156,11 +139,6 @@ function google_civic_location_marker($location) {
  *   Two strings--the opening / closing times.
  */
 function google_civic_location_poll_time($location) {
-  /**
-   * coderev-google_civic
-   * If the polling hours is returned as " - ", this code will end up displaying
-   * blank polling hours on the where do i vote page. 
-   */
   $polling_hours = explode('-', $location->pollingHours);
 
   if (count($polling_hours) != 2) {
@@ -170,6 +148,11 @@ function google_civic_location_poll_time($location) {
   $poll_times = array();
   $poll_times[] = trim($polling_hours[0]);
   $poll_times[] = trim($polling_hours[1]);
+
+  if (!$poll_times[0] || !$poll_times[1]) {
+    return NULL;
+  }
+
   return $poll_times;
 }
 
@@ -179,13 +162,7 @@ function google_civic_location_poll_time($location) {
  * @return string
  *   The admin-set election date--formatted for display.
  */
-function _google_civic_get_election_date_string() {
-  /**
-   * coderev-google_civic
-   * This function name is a little imprecise - let's use
-   * _google_civic_format_election_date instead.
-   */
-  
+function _google_civic_format_election_date() {
   $election_date = variable_get('google_civic_election_date',
                                 '2012-11-06 00:00:00');
   $election_time = strtotime($election_date);

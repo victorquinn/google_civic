@@ -19,20 +19,13 @@ function google_civic_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
-  /**
-   * coderev-google_civic
-   * Change the page callback to google_civic_wheredoivote
-   * And similarly change the file name to .wheredoivote.inc, and the permission
-   * voterinfo overlaps with the API call, which can get confusing
-   * Finally the type for this menu item should be MENU_CALLBACK, because we
-   * don't want it to appear in navigational menus automatically.
-   */
-  $items['google_civic/wheredoivote'] = array(
-    'title' => 'Where do I vote?',
+  $items['google_civic/voterinfo'] = array(
+    'title' => 'Where Do I Vote?',
     'page callback' => 'google_civic_voterinfo',
     'access arguments' => array('view google civic voterinfo'),
     'file' => 'google_civic.voterinfo.inc',
     'description' => t('Find your polling place'),
+    'type' => MENU_CALLBACK,
   );
 
   return $items;
@@ -75,33 +68,19 @@ function google_civic_block($op = 'list', $delta = 0, $edit = array()) {
 function google_civic_theme($existing, $type, $theme, $path) {
   $tpls_dir = drupal_get_path('module', 'google_civic') . '/tpls';
 
-  
-  /**
-   * coderev-google_civic
-   * the theme hooks should be separated with all underscores below (e.g.
-   * google_civic_block_address) and the templates should be separated with
-   * all hyphens (e.g. google-civic-block-adress)
-   * Finally change the "voterinfo" thing to "wheredoivote".
-   */
   $templates = array(
-    'google_civic-block-address' => array(
+    'google_civic_voterinfo' => array(
       'arguments' => array(
+        'headline' => '',
+        'locations' => '',
+        'early_locations' => '',
+        'map' => '',
+        'election_info_link' => '',
+        'extra_data' => '',
         'address_form' => '',
       ),
       'path' => $tpls_dir,
-      'template' => 'google_civic-block-address',
-    ),
-    'google_civic-voterinfo' => array(
-      'arguments' => array(
-        'title' => '',
-        'locations' => '',
-        'map' => '',
-        'election_info_link' => '',
-        'election_date' => '',
-        'extra_data' => '',
-      ),
-      'path' => $tpls_dir,
-      'template' => 'google_civic-voterinfo',
+      'template' => 'google-civic-voterinfo',
     ),
   );
 

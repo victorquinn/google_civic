@@ -28,6 +28,10 @@ function google_civic_address_marker($address) {
  *   A map--rendered as HTML.
  */
 function google_civic_map($address, $locations) {
+  if (!$address && (!$locations || empty($locations))) {
+    return NULL;
+  }
+
   $home_marker = google_civic_address_marker($address);
 
   $map = array();
@@ -84,12 +88,7 @@ function google_civic_map_marker($latitude, $longitude,
     'latitude' => $latitude,
     'longitude' => $longitude,
     'markername' => $markername,
-    /**
-     * coderev-google_civic
-     * Should offset always be 0?  Even when consuming code passes in a
-     * different parameter?
-     */
-    'offset' => 0,
+    'offset' => $offset,
   );
   return $marker;
 }

@@ -1,11 +1,6 @@
 <?php
 
 /**
- * coderev-google_civic
- * This function should be called something GoogleCivicAPI.class.inc.
- */
-
-/**
  * @file Google Civic API class
  */
 
@@ -85,6 +80,10 @@ class GoogleCivicAPI {
    */
   public function request_voterinfo($election_id, $address) {
     if (!is_int($election_id)) {
+      return NULL;
+    }
+
+    if (!$address) {
       return NULL;
     }
 
