@@ -91,11 +91,6 @@
   </div>
 <?php endif; ?>
 
-<?php if ($extra_data) : ?>
-  <?php foreach ($extra_data as $data) : ?>
-    <div><?php print $data; ?></div>
-  <?php endforeach; ?>
-<?php endif; ?>
 </div>
 <div id="google-civic-address-form-div">
   <p>Find voter information for another address:</p>
