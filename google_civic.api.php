@@ -19,3 +19,13 @@ function hook_google_civic_voterinfo($response) {
   $voter_postal_code = $response->normalizedInput->zip;
 }
 
+/**
+ * Hook to add additional data to the bottom of the voterinfo page.
+ *
+ * @return string
+ *   HTML
+ */
+function hook_google_civic_voterinfo_extra_data() {
+  return theme('___');
+}
+

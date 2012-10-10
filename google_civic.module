@@ -76,6 +76,7 @@ function google_civic_theme($existing, $type, $theme, $path) {
         'early_locations' => '',
         'map' => '',
         'election_info_link' => '',
+        'extra_data' => '',
         'address_form' => '',
       ),
       'path' => $tpls_dir,
