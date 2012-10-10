@@ -84,6 +84,11 @@ function google_civic_map_marker($latitude, $longitude,
     'latitude' => $latitude,
     'longitude' => $longitude,
     'markername' => $markername,
+    /**
+     * coderev-google_civic
+     * Should offset always be 0?  Even when consuming code passes in a
+     * different parameter?
+     */
     'offset' => 0,
   );
   return $marker;

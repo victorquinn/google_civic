@@ -14,17 +14,25 @@ function google_civic_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('google_civic_settings_form'),
     'access arguments' => array('administer google civic'),
-    'description' => t('Administer Google Civic.'),
+    'description' => t('Google Civic API settings'),
     'file' => 'google_civic.admin.inc',
     'type' => MENU_NORMAL_ITEM,
   );
 
+  /**
+   * coderev-google_civic
+   * Change the page callback to google_civic_wheredoivote
+   * And similarly change the file name to .wheredoivote.inc, and the permission
+   * voterinfo overlaps with the API call, which can get confusing
+   * Finally the type for this menu item should be MENU_CALLBACK, because we
+   * don't want it to appear in navigational menus automatically.
+   */
   $items['google_civic/wheredoivote'] = array(
-    'title' => 'Google Civic Voter Info',
+    'title' => 'Where do I vote?',
     'page callback' => 'google_civic_voterinfo',
     'access arguments' => array('view google civic voterinfo'),
     'file' => 'google_civic.voterinfo.inc',
-    'description' => t('Google Civic Voter Information View.'),
+    'description' => t('Find your polling place'),
   );
 
   return $items;
@@ -67,6 +75,14 @@ function google_civic_block($op = 'list', $delta = 0, $edit = array()) {
 function google_civic_theme($existing, $type, $theme, $path) {
   $tpls_dir = drupal_get_path('module', 'google_civic') . '/tpls';
 
+  
+  /**
+   * coderev-google_civic
+   * the theme hooks should be separated with all underscores below (e.g.
+   * google_civic_block_address) and the templates should be separated with
+   * all hyphens (e.g. google-civic-block-adress)
+   * Finally change the "voterinfo" thing to "wheredoivote".
+   */
   $templates = array(
     'google_civic-block-address' => array(
       'arguments' => array(

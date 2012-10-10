@@ -13,9 +13,15 @@
 function _google_civic_address_form() {
   $form = array();
 
+  /**
+   * coderev-google_civic
+   * Can you add a #size to these things so that they don't stick out of the
+   * block on a standard accelerator site?
+   * Also, let's get rid of the #description thing.
+   */
   $form['google_civic_address']['address_field'] = array(
     '#type' => 'textfield',
-    '#title' => t('Street Address'),
+    '#title' => t('Home Address'),
     '#description' => t('Enter your address to find your polling place.'),
     '#required' => TRUE,
   );

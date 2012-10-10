@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * coderev-google_civic
+ * This function should be called something GoogleCivicAPI.class.inc.
+ */
+
+/**
  * @file Google Civic API class
  */
 

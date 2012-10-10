@@ -29,6 +29,11 @@ function google_civic_get_api($api_key = NULL) {
  *   The address object as an address string.
  */
 function google_civic_translate_address_response($address_response) {
+  /**
+   * coderev-google_civic
+   * Let's call this function google_civic_format_address
+   * Also, $address_array is a bit imprecise - rename to $address_parts.
+   */
   $address_array[] = $address_response->locationName;
   $address_array[] = $address_response->line1;
   $address_array[] = $address_response->line2;
