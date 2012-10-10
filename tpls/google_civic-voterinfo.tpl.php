@@ -14,8 +14,8 @@
     <div class="adr">
       <p class="street-address"><?php print $location->address->line1; ?> <?php print $location->address->line2; ?> <?php print $location->address->line3; ?></p>
       <div>
-        <p class="locality"><?php print $location->address->city; ?></p>, 
-        <p class="region"><?php print $location->address->state; ?></p> 
+        <p class="locality"><?php print $location->address->city; ?></p>,
+        <p class="region"><?php print $location->address->state; ?></p>
         <p class="postal-code"><?php print $location->address->zip ?></p>
         <p class="country-name"></p>
       </div>
@@ -27,8 +27,10 @@
   <?php endforeach; ?>
   <div><?php print $map; ?></div>
   <div>For more information, visit: <?php print $election_info_link; ?></div>
+  <?php foreach ($extra_data as $data) : ?>
+    <div><?php print $data; ?></div>
+  <?php endforeach; ?>
 <?php else: ?>
 <p>Sorry.  We are unable to find a polling location for your address.</p>
 <?php endif; ?>
 </div>
-

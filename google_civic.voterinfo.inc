@@ -33,8 +33,10 @@ function google_civic_voterinfo() {
   module_load_include('inc', 'google_civic', 'google_civic.map');
   $map = google_civic_map($address, $locations);
 
+  $extra_data = module_invoke_all('google_civic_voterinfo');
+
   return theme('google_civic-voterinfo', $title, $locations, $map,
-               $election_info_link, $election_date);
+               $election_info_link, $election_date, $extra_data);
 }
 
 /**
