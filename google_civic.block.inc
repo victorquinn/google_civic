@@ -34,7 +34,7 @@ function google_civic_block_view($delta) {
 }
 
 function google_civic_block_address() {
-  $address_form = drupal_get_form('google_civic_address_form');
+  $address_form = drupal_get_form('google_civic_address_form', 'block');
   return $address_form;
 }
 

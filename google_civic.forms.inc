@@ -7,10 +7,12 @@
 /**
  * Sets the Google Civic Address Form structure--used to build the form.
  *
+ * @param string $style
+ *  The style of form to display: either 'page' or 'block'
  * @return Array
  *   The Google Civic Address Form structure.
  */
-function _google_civic_address_form() {
+function _google_civic_address_form($style) {
   $form = array();
 
   $form['google_civic_address']['address_field'] = array(
@@ -18,6 +20,11 @@ function _google_civic_address_form() {
     '#title' => t('Home Address'),
     '#required' => TRUE,
     '#size' => 35,
+  );
+  
+  $form['google_civic_address']['style'] = array(
+    '#type' => 'value',
+    '#value' => $style,
   );
 
   $form['submit'] = array(

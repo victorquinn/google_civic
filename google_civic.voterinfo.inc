@@ -8,7 +8,7 @@
  *   The voterinfo view rendered as HTML.
  */
 function google_civic_voterinfo() {
-  $address_form = drupal_get_form('google_civic_address_form');
+  $address_form = drupal_get_form('google_civic_address_form', 'page');
 
   if (!$_POST) {
     return $address_form;
