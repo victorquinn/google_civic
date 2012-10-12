@@ -40,11 +40,8 @@ function google_civic_voterinfo() {
   module_load_include('inc', 'google_civic', 'google_civic.map');
   $map = google_civic_map($address, array_merge($locations, $early_locations));
 
-  $extra_data = module_invoke_all('google_civic_voterinfo_extra_data');
-
   return theme('google_civic_voterinfo', $headline, $locations,
-               $early_locations, $map, $election_info_link, $extra_data,
-               $address_form);
+               $early_locations, $map, $election_info_link, $address_form);
 }
 
 /**
