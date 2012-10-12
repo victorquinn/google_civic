@@ -35,10 +35,14 @@ function google_civic_voterinfo() {
   $early_locations = google_civic_locations_response_massage(
                                           $response->earlyVoteSites);
 
-  $election_info_link = google_civic_voterinfo_response_get_link($response);
-
   module_load_include('inc', 'google_civic', 'google_civic.map');
   $map = google_civic_map($address, array_merge($locations, $early_locations));
+
+  $locations = google_civic_locations_render($locations, 'poll');
+  $early_locations = google_civic_locations_render($early_locations,
+                                                   'early-poll');
+
+  $election_info_link = google_civic_voterinfo_response_get_link($response);
 
   return theme('google_civic_voterinfo', $headline, $locations,
                $early_locations, $map, $election_info_link, $address_form);
@@ -167,5 +171,21 @@ function _google_civic_format_election_date() {
   $election_time = strtotime($election_date);
   $election_date = strftime('%B %e', $election_time);
   return $election_date;
+}
+
+/**
+ * Renders a list of Google Civic locations as HTML.
+ *
+ * @param Array $locations
+ *   A list of Google Civic locations.
+ * @param string $class_name
+ *   An identifier for the type of Google Civic location being rendered.
+ *
+ * @return string
+ *   The $locations--rendered as HTML.
+ */
+function google_civic_locations_render($locations, $class_name) {
+  $class_prefix = 'google-civic-voterinfo-' . $class_name;
+  return theme('google_civic_locations', $locations, $class_prefix);
 }
 

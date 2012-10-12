@@ -81,6 +81,14 @@ function google_civic_theme($existing, $type, $theme, $path) {
       'path' => $tpls_dir,
       'template' => 'google-civic-voterinfo',
     ),
+    'google_civic_locations' => array(
+      'arguments' => array(
+        'locations' => '',
+        'class_prefix' => '',
+      ),
+      'path' => $tpls_dir,
+      'template' => 'google-civic-locations',
+    ),
   );
 
   return $templates;

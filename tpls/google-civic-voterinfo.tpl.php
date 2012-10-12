@@ -10,75 +10,13 @@
 </div>
 <div id="google-civic-voterinfo">
 <?php if ($locations) : ?>
-  <?php foreach ($locations as $location) : ?>
-  <div class="google-civic-voterinfo-polling-location vcard">
-    <p class="fn org"><?php print $location->address->locationName; ?></p>
-    <div class="adr">
-      <p class="street-address">
-        <?php print $location->address->line1; ?>
-        <?php print $location->address->line2; ?>
-        <?php print $location->address->line3; ?>
-      </p>
-      <div>
-        <p class="locality"><?php print $location->address->city; ?></p>,
-        <p class="region"><?php print $location->address->state; ?></p>
-        <p class="postal-code"><?php print $location->address->zip ?></p>
-        <p class="country-name"></p>
-      </div>
-    </div>
-  </div>
-  <div class="google-civic-voterinfo-polling-hours">
-  <?php if ($location->opening_time) : ?>
-    <p>Polls are open from 
-      <span class="google-civic-voterinfo-poll-opening-time">
-        <?php print $location->opening_time; ?>
-      </span> - 
-      <span class="google-civic-voterinfo-poll-closing-time">
-        <?php print $location->closing_time; ?>
-      </span>
-    </p>
-  <?php else : ?>
-    <p>Sorry.  We're unable to find polling hours for this location.</p>
-  <?php endif; ?>
-  </div>
-  <?php endforeach; ?>
+  <?php print $locations; ?>
 <?php else: ?>
   <p>Sorry.  We are unable to find a polling location for your address.</p>
 <?php endif; ?>
 
 <?php if ($early_locations) : ?>
-  <?php foreach ($locations as $location) : ?>
-  <div class="google-civic-voterinfo-early-polling-location vcard">
-    <p class="fn org"><?php print $location->address->locationName; ?></p>
-    <div class="adr">
-      <p class="street-address">
-        <?php print $location->address->line1; ?>
-        <?php print $location->address->line2; ?>
-        <?php print $location->address->line3; ?>
-      </p>
-      <div>
-        <p class="locality"><?php print $location->address->city; ?></p>,
-        <p class="region"><?php print $location->address->state; ?></p>
-        <p class="postal-code"><?php print $location->address->zip ?></p>
-        <p class="country-name"></p>
-      </div>
-    </div>
-  </div>
-  <div class="google-civic-voterinfo-early-polling-hours">
-  <?php if ($location->opening_time) : ?>
-    <p>Polls are open from 
-      <span class="google-civic-voterinfo-early-poll-opening-time">
-        <?php print $location->opening_time; ?>
-      </span> - 
-      <span class="google-civic-voterinfo-early-poll-closing-time">
-        <?php print $location->closing_time; ?>
-      </span>
-    </p>
-  <?php else : ?>
-    <p>Sorry.  We're unable to find polling hours for this location.</p>
-  <?php endif; ?>
-  </div>
-  <?php endforeach; ?>
+  <?php print $early_locations; ?>
 <?php endif; ?>
 
 <?php if ($map) : ?>
