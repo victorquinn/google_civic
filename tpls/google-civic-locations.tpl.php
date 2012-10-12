@@ -35,7 +35,11 @@
       </span>
     </p>
   <?php else : ?>
-    <p>Sorry.  We're unable to find polling hours for this location.</p>
+    <p>
+      <?php print 
+        t("Sorry.  We're unable to find polling hours for this location.");
+      ?>
+    </p>
   <?php endif; ?>
   </div>
   <?php endforeach; ?>
