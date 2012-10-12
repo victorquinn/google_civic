@@ -102,7 +102,7 @@ function google_civic_theme($existing, $type, $theme, $path) {
  *  The style of form to display: either 'page' or 'block'
  * @see _google_civic_address_form (google_civic.forms.inc).
  */
-function google_civic_address_form($style = 'page') {
+function google_civic_address_form(&$form_state, $style = 'page') {
   module_load_include('inc', 'google_civic', 'google_civic.forms');
   return _google_civic_address_form($style);
 }
