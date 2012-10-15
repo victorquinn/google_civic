@@ -32,7 +32,7 @@ function google_civic_settings_form() {
   $form['google_civic_election_date'] = array(
     '#type' => 'date_select',
     '#title' => t('Election Day'),
-    '#default_value' => variable_get('google_civic_election_year', ''),
+    '#default_value' => variable_get('google_civic_election_date', ''),
     '#description' => t('Enter the election date (for display).'),
   );
 
