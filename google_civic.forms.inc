@@ -15,13 +15,19 @@
 function _google_civic_address_form($style) {
   $form = array();
 
+  $form['google_civic_address']['intro'] = array(
+    '#type' => 'item',
+    '#value' => ('Find voter information for the address below:'),
+    '#weight' => 0,
+  );
+
   $form['google_civic_address']['address_field'] = array(
     '#type' => 'textfield',
     '#title' => t('Home Address'),
     '#required' => TRUE,
     '#size' => 35,
   );
-  
+
   $form['google_civic_address']['style'] = array(
     '#type' => 'value',
     '#value' => $style,

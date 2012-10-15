@@ -36,7 +36,6 @@
 
 </div>
 <div id="google-civic-address-form-div">
-  <p><?php print t('Find voter information for another address:'); ?></p>
   <?php print $address_form; ?>
 </div>
 
