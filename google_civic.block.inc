@@ -28,6 +28,9 @@ function google_civic_block_list() {
  */
 function google_civic_block_view($delta) {
   if ($delta == 'google_civic_address') {
+    drupal_add_css(drupal_get_path('module', 'google_civic') .
+      '/css/google_civic.css');
+
     $block['subject'] = t('Find Your Polling Place');
     $block['content'] = google_civic_block_address();
   }
