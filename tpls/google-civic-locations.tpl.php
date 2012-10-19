@@ -43,12 +43,6 @@
             </span>
           <?php endif; ?>
         </p>
-      <?php else : ?>
-        <p>
-          <?php print 
-            t("Sorry.  We're unable to find polling hours for this location.");
-          ?>
-        </p>
       <?php endif; ?>
       </div>
     </div>

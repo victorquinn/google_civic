@@ -25,6 +25,9 @@
 
   <?php if ($early_locations) : ?>
     <div id="google-civic-voterinfo-early-locations">
+      <div id="google-civic-voterinfo-early-locations-title">
+        <?php print t('Early polling locations'); ?>
+      </div>
       <?php print $early_locations; ?>
     </div>
   <?php endif; ?>
