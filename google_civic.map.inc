@@ -5,14 +5,16 @@
  *
  * @param string $address
  *   An address string.
+ * @param string $markername
+ *   A GMap module marker name.
  *
  * @return Array
  *   A GMap-style map marker.
  */
-function google_civic_address_marker($address) {
+function google_civic_address_marker($address, $markername) {
   $geocode_data = gmap_geocode($address);
   $marker = google_civic_map_marker($geocode_data['latitude'],
-                                    $geocode_data['longitude'], '');
+                                    $geocode_data['longitude'], $markername);
   return $marker;
 }
 
@@ -32,7 +34,7 @@ function google_civic_map($address, $locations) {
     return NULL;
   }
 
-  $home_marker = google_civic_address_marker($address);
+  $home_marker = google_civic_address_marker($address, NULL);
 
   $map = array();
   $map['id'] = gmap_get_auto_mapid();

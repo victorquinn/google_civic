@@ -31,9 +31,9 @@ function google_civic_voterinfo() {
         array('!election_date' => $election_date,));
 
   $locations = google_civic_locations_response_massage(
-                                          $response->pollingLocations);
+                                          $response->pollingLocations, 'green');
   $early_locations = google_civic_locations_response_massage(
-                                          $response->earlyVoteSites);
+                                          $response->earlyVoteSites, 'blue');
 
   module_load_include('inc', 'google_civic', 'google_civic.map');
   $map = google_civic_map($address, array_merge($locations, $early_locations));
@@ -65,12 +65,16 @@ function google_civic_request_voterinfo($election_id, $address) {
  *
  * @param Array $locations_response
  *   A pollingLocations array from a voterinfo response.
+ * @param string $markername
+ *   A GMap module marker name.
  *
  * @return Array
  *   The pollingLocations--massaged to include a Google Map of the
  *   polling location.
  */
-function google_civic_locations_response_massage($locations_response) {
+function google_civic_locations_response_massage($locations_response,
+                                                           $markername) {
+
   $locations = array();
   if (!$locations_response) {
     return $locations;
@@ -79,7 +83,7 @@ function google_civic_locations_response_massage($locations_response) {
   module_load_include('inc', 'google_civic', 'google_civic.map');
 
   foreach($locations_response as &$location) {
-    $location->marker = google_civic_location_marker($location);
+    $location->marker = google_civic_location_marker($location, $markername);
     list($start_time, $end_time) = google_civic_location_poll_time($location);
 
     $location->opening_time = $start_time;
@@ -120,15 +124,17 @@ function google_civic_voterinfo_response_get_link($voterinfo_response) {
  *
  * @param Object $location
  *   A Google Civic location (from a voterinfo response).
+ * @param string $markername
+ *   A GMap module marker name.
  *
  * @return Array
  *   A GMap-style map marker.
  */
-function google_civic_location_marker($location) {
+function google_civic_location_marker($location, $markername) {
   module_load_include('inc', 'google_civic', 'google_civic.google');
 
   $address = google_civic_translate_address_response($location->address);
-  $marker = google_civic_address_marker($address);
+  $marker = google_civic_address_marker($address, $markername);
   return $marker;
 }
 
