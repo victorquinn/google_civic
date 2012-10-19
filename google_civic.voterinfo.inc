@@ -24,6 +24,9 @@ function google_civic_voterinfo() {
   $response = google_civic_request_voterinfo($election_id, $address);
   module_invoke_all('google_civic_voterinfo', $response);
 
+  $address = google_civic_translate_address_response(
+                                          $response->normalizedInput);
+
   $election_date = _google_civic_format_election_date();
   $headline = format_plural(count($response->pollingLocations),
         'Your Polling Location for the !election_date Election:',

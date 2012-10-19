@@ -29,15 +29,51 @@ function google_civic_get_api($api_key = NULL) {
  *   The address object as an address string.
  */
 function google_civic_translate_address_response($address_response) {
+  $street_address = google_civic_address_response_street_address(
+                                                        $address_response);
+
+  $location_name = $address_response->locationName;
+  $city = $address_response->city;
+  $state = $address_response->state;
+  $zip = $address_response->zip;
+
+  if ($location_name && ($street_address || $city || $state || $zip)) {
+    $location_name .= ',';
+  }
+
+  if ($street_address && ($city || $state || $zip)) {
+    $street_address .= ',';
+  }
+
+  if ($city && ($state || $zip)) {
+    $city .= ',';
+  }
+
   $address_parts = array();
-  $address_parts[] = $address_response->locationName;
-  $address_parts[] = $address_response->line1;
-  $address_parts[] = $address_response->line2;
-  $address_parts[] = $address_response->line3;
-  $address_parts[] = $address_response->city;
-  $address_parts[] = $address_response->state;
-  $address_parts[] = $address_response->zip;
+  $address_parts[] = $location_name;
+  $address_parts[] = $street_address;
+  $address_parts[] = $city;
+  $address_parts[] = $state;
+  $address_parts[] = $zip;
   $address = join(' ', $address_parts);
   return $address;
+}
+
+/**
+ * Extracts a street address from a Google Civic address response.
+ *
+ * @param Object $address_response
+ *   A Google Civic address response.
+ *
+ * @return string
+ *   A street address string.
+ */
+function google_civic_address_response_street_address($address_response) {
+  $street_address_parts = array();
+  $street_address_parts[] = $address_response->line1;
+  $street_address_parts[] = $address_response->line2;
+  $street_address_parts[] = $address_response->line3;
+  $street_address = trim(join(' ', $street_address_parts));
+  return $street_address;
 }
 
