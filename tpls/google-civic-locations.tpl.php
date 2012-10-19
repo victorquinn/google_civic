@@ -32,6 +32,16 @@
           <span class="<?php print $class_prefix; ?>-closing-time">
             <?php print $location->closing_time; ?>
           </span>
+          <?php if ($location->startDate && $location->endDate): ?>
+            <?php print t('between'); ?>
+            <span class="<?php print $class_prefix; ?>-start-date">
+              <?php print $location->startDate; ?>
+            </span>
+            <?php print t('and'); ?>
+            <span class="<?php print $class_prefix; ?>-end-date">
+              <?php print $location->endDate; ?>
+            </span>
+          <?php endif; ?>
         </p>
       <?php else : ?>
         <p>
