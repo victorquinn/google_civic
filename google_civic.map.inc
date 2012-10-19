@@ -40,6 +40,8 @@ function google_civic_map($address, $locations) {
   $map['id'] = gmap_get_auto_mapid();
   $map['zoom'] = 'auto';
   $map['autoshow'] = FALSE;
+  $map['width'] = '500px';
+  $map['height'] = '300px';
   $map['markers'] = array();
 
   google_civic_map_add_marker($map, $home_marker);
