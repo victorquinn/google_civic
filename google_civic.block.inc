@@ -28,6 +28,7 @@ function google_civic_block_list() {
  */
 function google_civic_block_view($delta) {
   if ($delta == 'google_civic_address') {
+    $block['subject'] = t('Find Your Polling Place');
     $block['content'] = google_civic_block_address();
   }
   return $block;

@@ -9,6 +9,10 @@
   <?php print $headline; ?>
 </div>
 <div id="google-civic-voterinfo">
+  <?php if ($map) : ?>
+    <div id="google-civic-voterinfo-gmap"><?php print $map; ?></div>
+  <?php endif; ?>
+
 <?php if ($locations) : ?>
   <?php print $locations; ?>
 <?php else: ?>
@@ -19,10 +23,6 @@
 
 <?php if ($early_locations) : ?>
   <?php print $early_locations; ?>
-<?php endif; ?>
-
-<?php if ($map) : ?>
-  <div id="google-civic-voterinfo-gmap"><?php print $map; ?></div>
 <?php endif; ?>
 
 <?php if ($election_info_link) : ?>
