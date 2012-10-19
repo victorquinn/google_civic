@@ -13,8 +13,11 @@
  */
 function google_civic_address_marker($address, $markername) {
   $geocode_data = gmap_geocode($address);
+
   $marker = google_civic_map_marker($geocode_data['latitude'],
                                     $geocode_data['longitude'], $markername);
+  $marker['text'] = $address;
+
   return $marker;
 }
 
