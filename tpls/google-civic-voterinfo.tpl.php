@@ -14,7 +14,9 @@
   <?php endif; ?>
 
 <?php if ($locations) : ?>
-  <?php print $locations; ?>
+  <div id="google-civic-voterinfo-polling-locations">
+    <?php print $locations; ?>
+  </div>
 <?php else: ?>
   <p><?php print 
     t('Sorry.  We are unable to find a polling location for your address.');
@@ -22,7 +24,9 @@
 <?php endif; ?>
 
 <?php if ($early_locations) : ?>
-  <?php print $early_locations; ?>
+  <div id="google-civic-voterinfo-early-locations">
+    <?php print $early_locations; ?>
+  </div>
 <?php endif; ?>
 
 <?php if ($election_info_link) : ?>

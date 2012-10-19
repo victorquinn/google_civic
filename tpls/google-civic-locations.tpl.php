@@ -23,10 +23,9 @@
         <span class="country-name"></span>
       </div>
     </div>
-  </div>
   <div class="<?php print $class_prefix; ?>-hours">
   <?php if ($location->opening_time) : ?>
-    <p>Polls are open from 
+    <p><?php print t('Polls are open from '); ?>
       <span class="<?php print $class_prefix; ?>-opening-time">
         <?php print $location->opening_time; ?>
       </span> - 
@@ -41,6 +40,7 @@
       ?>
     </p>
   <?php endif; ?>
+  </div>
   </div>
   <?php endforeach; ?>
 <?php endif; ?>

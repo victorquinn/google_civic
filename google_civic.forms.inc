@@ -26,6 +26,8 @@ function _google_civic_address_form($style) {
     '#title' => t('Home Address'),
     '#required' => TRUE,
     '#size' => 35,
+    '#description' =>
+      t('Enter your street address to find your polling location'),
   );
 
   $form['google_civic_address']['style'] = array(
@@ -41,6 +43,7 @@ function _google_civic_address_form($style) {
 
   $form['#action'] = url('google_civic/voterinfo');
   $form['#redirect'] = FALSE;
+  $form['#attributes']['class'] .= ' google-civic-address-form ';
 
   return $form;
 }
