@@ -10,8 +10,8 @@
  */
 function google_civic_install() {
   variable_set('google_civic_key', '');
-  variable_set('google_civic_election_id', '');
-  variable_set('google_civic_election_date', '');
+  variable_set('google_civic_election_id', '4000');
+  variable_set('google_civic_election_date', '2012-11-06 00:00');
 }
 
 /**

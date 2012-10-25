@@ -18,24 +18,30 @@ function google_civic_settings_form($form, &$form_state) {
     '#type' => 'textfield',
     '#title' => t('Google Civic API Key'),
     '#default_value' => variable_get('google_civic_key', ''),
-    '#description' => t('Enter your Google Civic API Key.'),
+    '#description' => t('Enter your Google Civic API Key. Obtain one from the'
+                    . ' !google_api_console',
+                    array('!google_api_console' =>
+                      l('Google API Console',
+                        'https://code.google.com/apis/console/')
+                    )
+    ),
   );
 
   $form['google_civic_election_id'] = array(
     '#type' => 'textfield',
     '#title' => t('Google Civic Election ID'),
-    '#default_value' => variable_get('google_civic_election_id', ''),
+    '#default_value' => variable_get('google_civic_election_id', '4000'),
     '#description' => t('Enter the Google Civic election ID to use '
-                      . 'when issuing Google Civic requests.'),
+                      . 'when issuing Google Civic requests. Defaults to 4000,'
+                      . 'the default key for the U.S. 2012 General Election.'),
   );
 
   $form['google_civic_election_date'] = array(
     '#type' => 'date_select',
     '#title' => t('Election Day'),
-    '#default_value' => variable_get('google_civic_election_date', ''),
+    '#default_value' => variable_get('google_civic_election_date', '2012-11-06 00:00'),
     '#description' => t('Enter the election date (for display).'),
   );
 
   return system_settings_form($form);
 }
-
