@@ -39,7 +39,7 @@ function google_civic_voterinfo() {
 
   $early_locations =!empty($response->earlyVoteSites) ?
     google_civic_locations_response_massage($response->earlyVoteSites, 'blue') :
-    NULL;
+    array();
 
   module_load_include('inc', 'google_civic', 'google_civic.map');
   $map = google_civic_map($address, array_merge($locations, $early_locations));
@@ -47,12 +47,12 @@ function google_civic_voterinfo() {
   $locations = google_civic_locations_render($locations, 'poll');
   $early_locations = !empty($early_locations) ?
     google_civic_locations_render($early_locations, 'early-poll') :
-    NULL;
+    array();
 
   $election_info_link = google_civic_voterinfo_response_get_link($response);
 
   return theme('google_civic_voterinfo', array('headline' => $headline, 'locations' => $locations, 'early_locations' =>
-               $early_locations, 'map' => $map, 'election_info_link' => $election_info_link, 'address_form' => $address_form));
+               $early_locations, 'map' => $map, 'election_info_link' => $election_info_link, 'address_form ' => $address_form));
 }
 
 /**
@@ -115,10 +115,12 @@ function google_civic_voterinfo_response_get_link($voterinfo_response) {
     return NULL;
   }
 
-  $election_info_url = $voterinfo_response->state[0]->local_jurisdiction->
-                        electionAdministrationBody->electionInfoUrl;
+  if (!empty($voterinfo_response->state)) {
+    $election_info_url = $voterinfo_response->state[0]->local_jurisdiction->
+      electionAdministrationBody->electionInfoUrl;
+  }
 
-  if (!$election_info_url) {
+  if (empty($election_info_url)) {
     return NULL;
   }
 

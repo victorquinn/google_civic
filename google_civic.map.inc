@@ -53,7 +53,7 @@ function google_civic_map($address, $locations) {
   }
 
   // TODO Please change this theme call to use an associative array for the $variables parameter.
-  return theme('gmap', array('#settings' => $map));
+  return theme('gmap', array('element' => array('#gmap_settings' => $map)));
 }
 
 /**
@@ -100,4 +100,3 @@ function google_civic_map_marker($latitude, $longitude,
   );
   return $marker;
 }
-

@@ -13,8 +13,8 @@
       <div class="adr">
         <p class="street-address">
           <?php print $location->address->line1; ?>
-<?php if (!empty($location->address->line2)) print $location->address->line2; ?>
-          <?php print $location->address->line3; ?>
+          <?php if (!empty($location->address->line2)) print $location->address->line2; ?>
+          <?php if (!empty($location->address->line3)) print $location->address->line3; ?>
         </p>
         <div>
           <span class="locality"><?php print $location->address->city; ?></span>,
@@ -32,7 +32,7 @@
           <span class="<?php print $class_prefix; ?>-closing-time">
             <?php print $location->closing_time; ?>
           </span>
-          <?php if ($location->startDate && $location->endDate): ?>
+        <?php if (!empty($location->startDate) && !empty($location->endDate)): ?>
             <?php print t('between'); ?>
             <span class="<?php print $class_prefix; ?>-start-date">
               <?php print $location->startDate; ?>
