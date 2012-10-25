@@ -19,6 +19,15 @@ function google_civic_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
+  $items['google_civic/voterinfo'] = array(
+    'title' => 'Where Do I Vote?',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('google_civic_address_form'),
+    'access arguments' => array('view google civic voterinfo'),
+    'file' => 'google_civic.voterinfo.inc',
+    'description' => t('Find your polling place'),
+    'type' => MENU_CALLBACK,
+  );
   $items['google_civic/voterinfo/%'] = array(
     'title' => 'Where Do I Vote?',
     'page callback' => 'google_civic_voterinfo',

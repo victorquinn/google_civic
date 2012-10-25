@@ -52,8 +52,12 @@ function google_civic_map($address, $locations) {
     google_civic_map_add_marker($map, $location->marker);
   }
 
-  // TODO Please change this theme call to use an associative array for the $variables parameter.
-  return theme('gmap', array('element' => array('#gmap_settings' => $map)));
+  $variables = array(
+    'element' => array(
+      '#gmap_settings' => $map,
+    )
+  );
+  return theme('gmap', $variables);
 }
 
 /**
