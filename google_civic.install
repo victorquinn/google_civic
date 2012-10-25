@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements Drupal's hook_install().
+ * Implements hook_install().
  */
 function google_civic_install() {
   variable_set('google_civic_key', '');
@@ -15,7 +15,7 @@ function google_civic_install() {
 }
 
 /**
- * Implements Drupal's hook_uninstall().
+ * Implements hook_uninstall().
  */
 function google_civic_uninstall() {
   variable_del('google_civic_key');

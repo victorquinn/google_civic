@@ -31,7 +31,7 @@ function google_civic_voterinfo() {
   $headline = format_plural(count($response->pollingLocations),
         'Your Polling Location for the !election_date Election:',
         'Your Polling Locations for the !election_date Election:',
-        array('!election_date' => $election_date,));
+        array('!election_date' => $election_date));
 
   $locations = google_civic_locations_response_massage(
                                           $response->pollingLocations, 'green');
@@ -47,8 +47,8 @@ function google_civic_voterinfo() {
 
   $election_info_link = google_civic_voterinfo_response_get_link($response);
 
-  return theme('google_civic_voterinfo', $headline, $locations,
-               $early_locations, $map, $election_info_link, $address_form);
+  return theme('google_civic_voterinfo', array('headline' => $headline, 'locations' => $locations, 'early_locations' =>
+               $early_locations, 'map' => $map, 'election_info_link' => $election_info_link, 'address_form' => $address_form));
 }
 
 /**
@@ -85,7 +85,7 @@ function google_civic_locations_response_massage($locations_response,
 
   module_load_include('inc', 'google_civic', 'google_civic.map');
 
-  foreach($locations_response as &$location) {
+  foreach ($locations_response as &$location) {
     $location->marker = google_civic_location_marker($location, $markername);
     list($start_time, $end_time) = google_civic_location_poll_time($location);
 
@@ -195,6 +195,6 @@ function _google_civic_format_election_date() {
  */
 function google_civic_locations_render($locations, $class_name) {
   $class_prefix = 'google-civic-voterinfo-' . $class_name;
-  return theme('google_civic_locations', $locations, $class_prefix);
+  return theme('google_civic_locations', array('locations' => $locations, 'class_prefix' => $class_prefix));
 }
 

@@ -6,10 +6,10 @@
  */
 
 /**
- * Implements Drupal's hook_menu().
+ * Implements hook_menu().
  */
 function google_civic_menu() {
-  $items['admin/settings/google_civic'] = array(
+  $items['admin/config/google_civic'] = array(
     'title' => 'Google Civic Settings',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('google_civic_settings_form'),
@@ -32,45 +32,59 @@ function google_civic_menu() {
 }
 
 /**
- * Implements Drupal's hook_perm().
+ * Implements hook_permission().
  */
-function google_civic_perm() {
+function google_civic_permission() {
   $perms = array(
-    'administer google civic',
-    'view google civic voterinfo'
+    'administer google civic' => array(
+      'title' => t('administer google civic'),
+      'description' => t('TODO Add a description for \'administer google civic\''),
+    ),
+    'view google civic voterinfo' => array(
+      'title' => t('view google civic voterinfo'),
+      'description' => t('TODO Add a description for \'view google civic voterinfo\''),
+    ),
   );
 
   return $perms;
 }
 
 /**
- * Implements Drupal's hook_block().
+ * Implements hook_block_info().
  */
-function google_civic_block($op = 'list', $delta = 0, $edit = array()) {
-  module_load_include('inc', 'google_civic', 'google_civic.block');
+function google_civic_block_info() {
+  $blocks = array();
+  $blocks['google_civic_address'] = array(
+    'info' => t('Google Civic Address Block'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
 
-  switch ($op) {
-    case 'list':
-      return google_civic_block_list();
-    case 'configure':
-    case 'save':
-      break;
-    case 'view':
-      return google_civic_block_view($delta);
-    default:
-      break;
-  }
+  return $blocks;
 }
 
 /**
- * Implements Drupal's hook_theme().
+ * Implements hook_block_view().
+ */
+function google_civic_block_view($delta) {
+  if ($delta == 'google_civic_address') {
+    drupal_add_css(drupal_get_path('module', 'google_civic') .
+      '/css/google_civic.css');
+
+    $block['subject'] = t('Find Your Polling Place');
+    $block['content'] = drupal_get_form('google_civic_address_form', 'block');
+  }
+  return $block;
+}
+
+/**
+ * Implements hook_theme().
  */
 function google_civic_theme($existing, $type, $theme, $path) {
   $tpls_dir = drupal_get_path('module', 'google_civic') . '/tpls';
 
   $templates = array(
     'google_civic_voterinfo' => array(
-      'arguments' => array(
+      'variables' => array(
         'headline' => '',
         'locations' => '',
         'early_locations' => '',
@@ -82,7 +96,7 @@ function google_civic_theme($existing, $type, $theme, $path) {
       'template' => 'google-civic-voterinfo',
     ),
     'google_civic_locations' => array(
-      'arguments' => array(
+      'variables' => array(
         'locations' => '',
         'class_prefix' => '',
       ),
@@ -106,4 +120,3 @@ function google_civic_address_form(&$form_state, $style = 'page') {
   module_load_include('inc', 'google_civic', 'google_civic.forms');
   return _google_civic_address_form($style);
 }
-

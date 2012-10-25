@@ -1,7 +1,9 @@
 name = Google Civic
 description = Drupal module for Google Civic API interactivity.
-core = 6.x
+core = 7.x
 package = Google API
 group = Google API
 dependencies[] = gmap
 
+
+files[] = GoogleCivicAPI.class.php

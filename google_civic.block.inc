@@ -6,39 +6,12 @@
  * Google Civic module.
  */
 
-/**
- * Lists the Google Civic Drupal blocks.
- *
- * @return Array
- *   The list of Google Civic Drupal blocks.
- */
-function google_civic_block_list() {
-  $blocks['google_civic_address']['info'] = t('Google Civic Address Block');
-  return $blocks;
-}
 
 /**
- * Renders the correct block view.
- *
- * @param string $delta
- *   A Drupal block name.
- *
- * @return string
- *   The block (corresponding to $delta) rendered as HTML.
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
  */
-function google_civic_block_view($delta) {
-  if ($delta == 'google_civic_address') {
-    drupal_add_css(drupal_get_path('module', 'google_civic') .
-      '/css/google_civic.css');
-
-    $block['subject'] = t('Find Your Polling Place');
-    $block['content'] = google_civic_block_address();
-  }
-  return $block;
-}
-
 function google_civic_block_address() {
   $address_form = drupal_get_form('google_civic_address_form', 'block');
   return $address_form;
 }
-

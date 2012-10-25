@@ -48,11 +48,12 @@ function google_civic_map($address, $locations) {
   $map['markers'] = array();
 
   google_civic_map_add_marker($map, $home_marker);
-  foreach($locations as $location) {
+  foreach ($locations as $location) {
     google_civic_map_add_marker($map, $location->marker);
   }
 
-  return theme('gmap', array('#settings' => $map,));
+  // TODO Please change this theme call to use an associative array for the $variables parameter.
+  return theme('gmap', array('#settings' => $map));
 }
 
 /**

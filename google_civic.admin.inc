@@ -11,7 +11,7 @@
  * @return Form
  *   An array containing form items to place on the module settings page.
  */
-function google_civic_settings_form() {
+function google_civic_settings_form($form, &$form_state) {
   $form = array();
 
   $form['google_civic_key'] = array(
