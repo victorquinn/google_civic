@@ -9,12 +9,12 @@
  * Implements hook_menu().
  */
 function google_civic_menu() {
-  $items['admin/config/google_civic'] = array(
-    'title' => 'Google Civic Settings',
+  $items['admin/config/services/google_civic'] = array(
+    'title' => 'Google Civic',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('google_civic_settings_form'),
     'access arguments' => array('administer google civic'),
-    'description' => t('Google Civic API settings'),
+    'description' => t('API settings'),
     'file' => 'google_civic.admin.inc',
     'type' => MENU_NORMAL_ITEM,
   );
