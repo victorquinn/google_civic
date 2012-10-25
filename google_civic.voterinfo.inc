@@ -9,17 +9,18 @@
  */
 function google_civic_voterinfo() {
   $address_form = drupal_get_form('google_civic_address_form', 'page');
+  $args = func_get_args();
 
-  if (!$_POST) {
+  if (empty($args[0])) {
     return $address_form;
   }
 
   drupal_add_css(drupal_get_path('module', 'google_civic')
                   . '/css/google_civic.css');
 
-  $election_id = (int) variable_get('google_civic_election_id', '');
+  $election_id = (int) variable_get('google_civic_election_id', '4000');
 
-  $address = check_plain($_POST['address_field']);
+  $address = check_plain($args[0]);
 
   $response = google_civic_request_voterinfo($election_id, $address);
   module_invoke_all('google_civic_voterinfo', $response);
@@ -35,15 +36,18 @@ function google_civic_voterinfo() {
 
   $locations = google_civic_locations_response_massage(
                                           $response->pollingLocations, 'green');
-  $early_locations = google_civic_locations_response_massage(
-                                          $response->earlyVoteSites, 'blue');
+
+  $early_locations =!empty($response->earlyVoteSites) ?
+    google_civic_locations_response_massage($response->earlyVoteSites, 'blue') :
+    NULL;
 
   module_load_include('inc', 'google_civic', 'google_civic.map');
   $map = google_civic_map($address, array_merge($locations, $early_locations));
 
   $locations = google_civic_locations_render($locations, 'poll');
-  $early_locations = google_civic_locations_render($early_locations,
-                                                   'early-poll');
+  $early_locations = !empty($early_locations) ?
+    google_civic_locations_render($early_locations, 'early-poll') :
+    NULL;
 
   $election_info_link = google_civic_voterinfo_response_get_link($response);
 
@@ -197,4 +201,3 @@ function google_civic_locations_render($locations, $class_name) {
   $class_prefix = 'google-civic-voterinfo-' . $class_name;
   return theme('google_civic_locations', array('locations' => $locations, 'class_prefix' => $class_prefix));
 }
-

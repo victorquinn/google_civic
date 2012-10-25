@@ -14,7 +14,7 @@
       <?php print $locations; ?>
     </div>
   <?php else: ?>
-    <p><?php print 
+    <p><?php print
       t('Sorry.  We are unable to find a polling location for your address.');
     ?></p>
   <?php endif; ?>
@@ -34,15 +34,14 @@
 
   <?php if ($election_info_link) : ?>
     <div id="google-civic-voterinfo-election-info">
-      <?php print 
-        t('For more information, visit: !link', 
-            array('!link' => $election_info_link)); 
+      <?php print
+        t('For more information, visit: !link',
+            array('!link' => $election_info_link));
       ?>
     </div>
   <?php endif; ?>
 
 </div>
 <div id="google-civic-address-form-div">
-  <?php print $address_form; ?>
+<?php print drupal_render($address_form); ?>
 </div>
-

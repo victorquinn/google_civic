@@ -19,9 +19,10 @@ function google_civic_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
 
-  $items['google_civic/voterinfo'] = array(
+  $items['google_civic/voterinfo/%'] = array(
     'title' => 'Where Do I Vote?',
     'page callback' => 'google_civic_voterinfo',
+    'page arguments' => array(2),
     'access arguments' => array('view google civic voterinfo'),
     'file' => 'google_civic.voterinfo.inc',
     'description' => t('Find your polling place'),
@@ -37,12 +38,13 @@ function google_civic_menu() {
 function google_civic_permission() {
   $perms = array(
     'administer google civic' => array(
-      'title' => t('administer google civic'),
-      'description' => t('TODO Add a description for \'administer google civic\''),
+      'title' => t('Administer Google Civic'),
     ),
     'view google civic voterinfo' => array(
-      'title' => t('view google civic voterinfo'),
-      'description' => t('TODO Add a description for \'view google civic voterinfo\''),
+      'title' => t('View Google Civic Voter Info'),
+      'description' => t('If you want anonymous users to be able to see the
+                         results of the voter search, make sure they have this
+                         permission!'),
     ),
   );
 
@@ -117,6 +119,46 @@ function google_civic_theme($existing, $type, $theme, $path) {
  * @see _google_civic_address_form (google_civic.forms.inc).
  */
 function google_civic_address_form(&$form_state, $style = 'page') {
-  module_load_include('inc', 'google_civic', 'google_civic.forms');
-  return _google_civic_address_form($style);
+  $form = array();
+
+  $form['google_civic_address']['intro'] = array(
+    '#type' => 'item',
+    '#value' => ('Find voter information for the address below:'),
+    '#weight' => 0,
+  );
+
+  $form['google_civic_address']['address_field'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Home Address'),
+    '#required' => TRUE,
+    '#size' => 35,
+    '#description' => t('Enter your street address to find your polling location'),
+  );
+
+  $form['google_civic_address']['style'] = array(
+    '#type' => 'value',
+    '#value' => $style,
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit'),
+    '#weight' => 100,
+  );
+
+  $form['#attributes'] = array(
+    'class' => array('google-civic-address-form')
+  );
+
+  return $form;
+}
+
+function google_civic_address_form_validate($form, &$form_state) {
+  if (empty($form_state['values']['address_field'])) {
+    form_set_error('address_field', t('Must provide your address'));
+  }
+}
+
+function google_civic_address_form_submit($form, &$form_state) {
+  $form_state['redirect'] = 'google_civic/voterinfo/' . htmlspecialchars($form_state['values']['address_field']);
 }

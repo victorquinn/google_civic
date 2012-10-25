@@ -32,10 +32,10 @@ function google_civic_translate_address_response($address_response) {
   $street_address = google_civic_address_response_street_address(
                                                         $address_response);
 
-  $location_name = $address_response->locationName;
-  $city = $address_response->city;
-  $state = $address_response->state;
-  $zip = $address_response->zip;
+  $location_name = !empty($address_response->locationName) ? $address_response->locationName : "";
+  $city = !empty($address_response->city) ? $address_response->city : "";
+  $state = !empty($address_response->state) ? $address_response->state : "";
+  $zip = !empty($address_response->zip) ? $address_response->zip : "";
 
   if ($location_name && ($street_address || $city || $state || $zip)) {
     $location_name .= ',';
@@ -71,9 +71,8 @@ function google_civic_translate_address_response($address_response) {
 function google_civic_address_response_street_address($address_response) {
   $street_address_parts = array();
   $street_address_parts[] = $address_response->line1;
-  $street_address_parts[] = $address_response->line2;
-  $street_address_parts[] = $address_response->line3;
+  $street_address_parts[] = !empty($address_response->line2) ? $address_response->line2 : "";
+  $street_address_parts[] = !empty($address_response->line3) ? $address_response->line3 : "";
   $street_address = trim(join(' ', $street_address_parts));
   return $street_address;
 }
-

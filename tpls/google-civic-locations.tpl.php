@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * @file Google Civic Locations Template.
@@ -13,7 +13,7 @@
       <div class="adr">
         <p class="street-address">
           <?php print $location->address->line1; ?>
-          <?php print $location->address->line2; ?>
+<?php if (!empty($location->address->line2)) print $location->address->line2; ?>
           <?php print $location->address->line3; ?>
         </p>
         <div>
@@ -28,7 +28,7 @@
         <p><?php print t('Polls are open from '); ?>
           <span class="<?php print $class_prefix; ?>-opening-time">
             <?php print $location->opening_time; ?>
-          </span> - 
+          </span> -
           <span class="<?php print $class_prefix; ?>-closing-time">
             <?php print $location->closing_time; ?>
           </span>
@@ -48,4 +48,3 @@
     </div>
   <?php endforeach; ?>
 <?php endif; ?>
-
