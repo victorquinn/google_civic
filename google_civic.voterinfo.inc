@@ -61,6 +61,8 @@ function google_civic_voterinfo() {
 
     $election_info_link = google_civic_voterinfo_response_get_link($response);
     $sorry = NULL;
+
+    $contests = google_civic_contest_info($response->contests);
   }
   else {
     $headline = NULL;
@@ -68,6 +70,7 @@ function google_civic_voterinfo() {
     $early_locations = array();
     $election_info_link = NULL;
     $map = NULL;
+    $contests = NULL;
     $sorry = t("Sorry, no polling locations found for: %address",
              array('%address' => $address));
   }
@@ -79,6 +82,7 @@ function google_civic_voterinfo() {
     'map' => $map,
     'election_info_link' => $election_info_link,
     'address_form' => $address_form,
+    'contests' => $contests,
     'sorry' => $sorry,
   );
 
@@ -238,4 +242,36 @@ function _google_civic_format_election_date() {
 function google_civic_locations_render($locations, $class_name) {
   $class_prefix = 'google-civic-voterinfo-' . $class_name;
   return theme('google_civic_locations', array('locations' => $locations, 'class_prefix' => $class_prefix));
+}
+
+/**
+ * Renders a series of fieldsets with the contest information.
+ */
+function google_civic_contest_info($contests) {
+  $candidates = $referendums = "";
+  foreach ($contests as $contest) {
+    switch($contest->type) {
+      case 'General':
+        $variables = array(
+          'title' => $contest->office,
+          'candidates' => $contest->candidates,
+        );
+        $candidates .= theme('google_civic_contest_candidate', $variables);
+        break;
+      case 'Referendum':
+        $variables = array(
+          'title' => $contest->referendumTitle,
+          'subtitle' => $contest->referendumSubtitle,
+          'details' => l('More Details', $contest->referendumUrl),
+        );
+        $referendums .= theme('google_civic_contest_referendum', $variables);
+        break;
+    }
+  }
+
+  // Need to include this to ensure the collapsible fieldsets work.
+  drupal_add_js('misc/form.js');
+  drupal_add_js('misc/collapse.js');
+
+  return $candidates . $referendums;
 }

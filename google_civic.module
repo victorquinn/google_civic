@@ -103,6 +103,7 @@ function google_civic_theme($existing, $type, $theme, $path) {
         'map' => NULL,
         'election_info_link' => NULL,
         'address_form' => NULL,
+        'contests' => NULL,
         'sorry' => NULL,
       ),
       'path' => $tpls_dir,
@@ -115,6 +116,23 @@ function google_civic_theme($existing, $type, $theme, $path) {
       ),
       'path' => $tpls_dir,
       'template' => 'google-civic-locations',
+    ),
+    'google_civic_contest_candidate' => array(
+      'variables' => array(
+        'title' => '',
+        'candidates' => '',
+      ),
+      'path' => $tpls_dir,
+      'template' => 'google-civic-contest-candidate',
+    ),
+    'google_civic_contest_referendum' => array(
+      'variables' => array(
+        'title' => '',
+        'subtitle' => '',
+        'details' => '',
+      ),
+      'path' => $tpls_dir,
+      'template' => 'google-civic-contest-referendum',
     ),
   );
 
