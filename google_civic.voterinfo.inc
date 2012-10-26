@@ -42,7 +42,9 @@ function google_civic_voterinfo() {
     array();
 
   module_load_include('inc', 'google_civic', 'google_civic.map');
-  $map = google_civic_map($address, array_merge($locations, $early_locations));
+  // Commented out because it was having issues in D7. To be worked out!
+  //  $map = google_civic_map($address, array_merge($locations, $early_locations));
+  $map = NULL;
 
   $locations = google_civic_locations_render($locations, 'poll');
   $early_locations = !empty($early_locations) ?
