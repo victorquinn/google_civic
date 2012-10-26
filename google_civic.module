@@ -28,6 +28,7 @@ function google_civic_menu() {
     'description' => t('Find your polling place'),
     'type' => MENU_CALLBACK,
   );
+  $items['wheredoivote'] = $items['google_civic/voterinfo'];
   $items['google_civic/voterinfo/%'] = array(
     'title' => 'Where Do I Vote?',
     'page callback' => 'google_civic_voterinfo',
@@ -96,12 +97,13 @@ function google_civic_theme($existing, $type, $theme, $path) {
   $templates = array(
     'google_civic_voterinfo' => array(
       'variables' => array(
-        'headline' => '',
-        'locations' => '',
-        'early_locations' => '',
-        'map' => '',
-        'election_info_link' => '',
-        'address_form' => '',
+        'headline' => NULL,
+        'locations' => NULL,
+        'early_locations' => NULL,
+        'map' => NULL,
+        'election_info_link' => NULL,
+        'address_form' => NULL,
+        'sorry' => NULL,
       ),
       'path' => $tpls_dir,
       'template' => 'google-civic-voterinfo',
@@ -136,11 +138,18 @@ function google_civic_address_form(&$form_state, $style = 'page') {
     '#weight' => 0,
   );
 
+  // We want to use the user entered address if there is one, the system default
+  // if the user hasn't entered one.
+  $default_address = !empty($form_state['address_field']) ?
+    $form_state['address_field'] :
+    variable_get('google_civic_default_address', '');
+
   $form['google_civic_address']['address_field'] = array(
     '#type' => 'textfield',
     '#title' => t('Home Address'),
     '#required' => TRUE,
     '#size' => 35,
+    '#default_value' => $default_address,
     '#description' => t('Enter your street address to find your polling location'),
   );
 

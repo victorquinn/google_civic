@@ -43,5 +43,13 @@ function google_civic_settings_form($form, &$form_state) {
     '#description' => t('Enter the election date (for display).'),
   );
 
+  $form['google_civic_default_address'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Default Address'),
+    '#default_value' => variable_get('google_civic_default_address', ''),
+    '#description' => t('An optional default address for pre-populating the Address search field.
+                         Should be a full address, e.g. "123 Main St, Anytown, VA 12345"'),
+  );
+
   return system_settings_form($form);
 }

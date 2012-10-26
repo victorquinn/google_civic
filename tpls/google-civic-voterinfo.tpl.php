@@ -5,18 +5,21 @@
  */
 ?>
 
+
 <div id="google-civic-voterinfo-heading">
-  <?php print $headline; ?>
+  <?= $headline; ?>
 </div>
 <div id="google-civic-voterinfo">
-  <?php if ($locations) : ?>
+  <?php if (!empty($locations)) : ?>
     <div id="google-civic-voterinfo-polling-locations">
-      <?php print $locations; ?>
+      <?= $locations; ?>
     </div>
   <?php else: ?>
-    <p><?php print
-      t('Sorry.  We are unable to find a polling location for your address.');
-    ?></p>
+    <p><?= $sorry ?></p>
+    <div id="google-civic-address-form-div">
+      <span class="google-civic-search-again">Please ensure your address is in the proper format and try again.</span>
+      <?= drupal_render($address_form); ?>
+    </div>
   <?php endif; ?>
 
   <?php if ($map) : ?>
@@ -41,7 +44,4 @@
     </div>
   <?php endif; ?>
 
-</div>
-<div id="google-civic-address-form-div">
-<?php print drupal_render($address_form); ?>
 </div>

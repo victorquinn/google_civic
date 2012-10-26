@@ -9,6 +9,7 @@
  */
 function google_civic_voterinfo() {
   $address_form = drupal_get_form('google_civic_address_form', 'page');
+
   $args = func_get_args();
 
   if (empty($args[0])) {
@@ -29,32 +30,59 @@ function google_civic_voterinfo() {
                                           $response->normalizedInput);
 
   $election_date = _google_civic_format_election_date();
-  $headline = format_plural(count($response->pollingLocations),
-        'Your Polling Location for the !election_date Election:',
-        'Your Polling Locations for the !election_date Election:',
-        array('!election_date' => $election_date));
+  if (!empty($response->pollingLocations)) {
+    $headline = format_plural(
+      count($response->pollingLocations),
+      'Your Polling Location for the !election_date Election:',
+      'Your Polling Locations for the !election_date Election:',
+      array('!election_date' => $election_date));
+    $locations = google_civic_locations_response_massage(
+      $response->pollingLocations, 'green');
 
-  $locations = google_civic_locations_response_massage(
-                                          $response->pollingLocations, 'green');
 
-  $early_locations =!empty($response->earlyVoteSites) ?
-    google_civic_locations_response_massage($response->earlyVoteSites, 'blue') :
-    array();
+    $early_locations =!empty($response->earlyVoteSites) ?
+      google_civic_locations_response_massage($response->earlyVoteSites, 'blue') :
+      array();
 
-  module_load_include('inc', 'google_civic', 'google_civic.map');
-  // Commented out because it was having issues in D7. To be worked out!
-  //  $map = google_civic_map($address, array_merge($locations, $early_locations));
-  $map = NULL;
+    /**
+     * Commented out because it was having issues in D7. To be worked out!
+     *
+    if (module_exists('gmap')) {
+      module_load_include('inc', 'google_civic', 'google_civic.map');
+      $map = google_civic_map($address, array_merge($locations, $early_locations));
+    }
+    */
+    $map = NULL;
 
-  $locations = google_civic_locations_render($locations, 'poll');
-  $early_locations = !empty($early_locations) ?
-    google_civic_locations_render($early_locations, 'early-poll') :
-    array();
+    $locations = google_civic_locations_render($locations, 'poll');
+    $early_locations = !empty($early_locations) ?
+      google_civic_locations_render($early_locations, 'early-poll') :
+      array();
 
-  $election_info_link = google_civic_voterinfo_response_get_link($response);
+    $election_info_link = google_civic_voterinfo_response_get_link($response);
+    $sorry = NULL;
+  }
+  else {
+    $headline = NULL;
+    $locations = NULL;
+    $early_locations = array();
+    $election_info_link = NULL;
+    $map = NULL;
+    $sorry = t("Sorry, no polling locations found for: %address",
+             array('%address' => $address));
+  }
 
-  return theme('google_civic_voterinfo', array('headline' => $headline, 'locations' => $locations, 'early_locations' =>
-               $early_locations, 'map' => $map, 'election_info_link' => $election_info_link, 'address_form ' => $address_form));
+  $variables = array(
+    'headline' => $headline,
+    'locations' => $locations,
+    'early_locations' => $early_locations,
+    'map' => $map,
+    'election_info_link' => $election_info_link,
+    'address_form' => $address_form,
+    'sorry' => $sorry,
+  );
+
+  return theme('google_civic_voterinfo', $variables);
 }
 
 /**
@@ -83,7 +111,6 @@ function google_civic_request_voterinfo($election_id, $address) {
  */
 function google_civic_locations_response_massage($locations_response,
                                                            $markername) {
-
   $locations = array();
   if (!$locations_response) {
     return $locations;
@@ -97,6 +124,13 @@ function google_civic_locations_response_massage($locations_response,
 
     $location->opening_time = $start_time;
     $location->closing_time = $end_time;
+
+    // Don't know why Google returns kind of an odd zip code, but we want to
+    // fix it.
+    $zip = $location->address->zip;
+    if (strlen($zip) == 9) {
+      $location->address->zip = substr($zip, 0, 5) . "-" . substr($zip, 5, 9);
+    }
 
     $locations[] = $location;
   }

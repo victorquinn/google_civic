@@ -54,7 +54,14 @@ function google_civic_translate_address_response($address_response) {
   $address_parts[] = $street_address;
   $address_parts[] = $city;
   $address_parts[] = $state;
+
+  // Don't know why Google returns kind of an odd zip code, but we want to
+  // fix it.
+  if (strlen($zip) == 9) {
+    $zip = substr($zip, 0, 5) . "-" . substr($zip, 5, 9);
+  }
   $address_parts[] = $zip;
+
   $address = join(' ', $address_parts);
   return $address;
 }
