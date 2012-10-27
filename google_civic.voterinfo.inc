@@ -120,12 +120,16 @@ function google_civic_locations_response_massage($locations_response,
     return $locations;
   }
 
-  module_load_include('inc', 'google_civic', 'google_civic.map');
+  if (module_exists('gmap')) {
+    module_load_include('inc', 'google_civic', 'google_civic.map');
+  }
 
   foreach ($locations_response as &$location) {
-    $location->marker = google_civic_location_marker($location, $markername);
-    list($start_time, $end_time) = google_civic_location_poll_time($location);
+    if (module_exists('gmap')) {
+      $location->marker = google_civic_location_marker($location, $markername);
+    }
 
+    list($start_time, $end_time) = google_civic_location_poll_time($location);
     $location->opening_time = $start_time;
     $location->closing_time = $end_time;
 
