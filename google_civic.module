@@ -33,7 +33,7 @@ function google_civic_menu() {
     'title' => 'Where Do I Vote?',
     'page callback' => 'google_civic_voterinfo',
     'page arguments' => array(2),
-    'access arguments' => array('view google civic voterinfo'),
+    'access arguments' => TRUE,
     'file' => 'google_civic.voterinfo.inc',
     'description' => t('Find your polling place'),
     'type' => MENU_CALLBACK,
@@ -49,12 +49,6 @@ function google_civic_permission() {
   $perms = array(
     'administer google civic' => array(
       'title' => t('Administer Google Civic'),
-    ),
-    'view google civic voterinfo' => array(
-      'title' => t('View Google Civic Voter Info'),
-      'description' => t('If you want anonymous users to be able to see the
-                         results of the voter search, make sure they have this
-                         permission!'),
     ),
   );
 
