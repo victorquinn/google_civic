@@ -41,7 +41,7 @@ background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAA
 
 /* Search form styles */
 .google-civic-address-form  .form-text {
- padding: 10px; 
+ padding: 10px;
   border: 1px solid #cccccc;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -62,7 +62,7 @@ background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAA
   /* IE6-9 */
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6); 
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
 }
 .google-civic-address-form  .form-submit {
     -webkit-border-radius: 1px;
@@ -81,15 +81,15 @@ background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAA
   color: white;
   font-weight: bold;
   font-size: 1.25em;
-  -webkit-transition: background .2s ease-out;  
-    -moz-transition: background .2s ease-out;  
-    -o-transition: background .2s ease-out;  
-    -ie-transition: background .2s ease-out;  
-  background-size:1px 80px; 
+  -webkit-transition: background .2s ease-out;
+    -moz-transition: background .2s ease-out;
+    -o-transition: background .2s ease-out;
+    -ie-transition: background .2s ease-out;
+  background-size:1px 80px;
 text-shadow: 1px 1px 5px #333;
 }
 .google-civic-address-form  .form-submit:hover {
-     background-position: -10px;  
+     background-position: -10px;
        cursor: pointer;
 }
 .google-civic-address-form  .description {
@@ -104,8 +104,7 @@ text-shadow: 1px 1px 5px #333;
 #google-civic-voterinfo-gmap .gmap {
   margin: auto;
 }
-#google-civic-voterinfo-heading{ color: #336699; }
-#google-civic-voterinfo-heading,
+
 #google-civic-voterinfo-early-locations-title,
 #google-civic-address-form-div > form> div > div:first-of-type{
   font-size: 1.5em;
@@ -115,21 +114,21 @@ text-shadow: 1px 1px 5px #333;
   font-weight: bold;
   font-size: 1.1em;
   margin-bottom: 0;
-}  
+}
 #google-civic-voterinfo .street-address {
- margin-bottom: 0; 
+ margin-bottom: 0;
 }
 .google-civic-voterinfo-poll-hours,
 .google-civic-voterinfo-early-poll-hours {
 font-weight: bold;
-  margin-top: .5em; 
+  margin-top: .5em;
 }
-.google-civic-voterinfo-poll-hours span, 
+.google-civic-voterinfo-poll-hours span,
 .google-civic-voterinfo-early-poll-hours span {
   font-weight: normal;
 }
 #google-civic-voterinfo-early-locations {
-  clear: both; 
+  clear: both;
 }
 #google-civic-voterinfo-early-locations-title {
   font-size: 1.5em;

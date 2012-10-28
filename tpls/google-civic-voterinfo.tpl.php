@@ -5,9 +5,9 @@
  */
 ?>
 
-<div id="google-civic-voterinfo-heading">
+<h2 id="google-civic-voterinfo-heading">
   <?php print $headline; ?>
-</div>
+</h2>
 <div id="google-civic-voterinfo">
   <?php if (!empty($locations)) : ?>
     <div id="google-civic-voterinfo-polling-locations">

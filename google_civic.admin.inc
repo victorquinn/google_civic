@@ -51,5 +51,11 @@ function google_civic_settings_form($form, &$form_state) {
                          Should be a full address, e.g. "123 Main St, Anytown, VA 12345"'),
   );
 
+  $form['google_civic_show_contest_info'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show contest information for the provided address. Includes candidates and referendums.'),
+    '#default_value' => variable_get('google_civic_show_contest_info', TRUE),
+  );
+
   return system_settings_form($form);
 }

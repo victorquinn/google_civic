@@ -33,8 +33,8 @@ function google_civic_voterinfo() {
   if (!empty($response->pollingLocations)) {
     $headline = format_plural(
       count($response->pollingLocations),
-      'Your Polling Location for the !election_date Election:',
-      'Your Polling Locations for the !election_date Election:',
+      'Your Polling Location for the !election_date Election',
+      'Your Polling Locations for the !election_date Election',
       array('!election_date' => $election_date));
     $locations = google_civic_locations_response_massage(
       $response->pollingLocations, 'green');
@@ -62,7 +62,8 @@ function google_civic_voterinfo() {
     $election_info_link = google_civic_voterinfo_response_get_link($response);
     $sorry = NULL;
 
-    $contests = google_civic_contest_info($response->contests);
+    $contests = variable_get('google_civic_show_contest_info', TRUE) ?
+      google_civic_contest_info($response->contests) : NULL;
   }
   else {
     $headline = NULL;
