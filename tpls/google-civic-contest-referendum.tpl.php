@@ -11,9 +11,9 @@
 ?>
 
 <fieldset class='collapsible collapsed google-civic-referendum'>
-   <legend><span class='fieldset-legend'><?= $title ?></span></legend>
+   <legend><span class='fieldset-legend'><?php print $title; ?></span></legend>
    <div class='fieldset-wrapper'>
-     <p><span class="google-civic-referendum-subtitle"><?= $subtitle ?></span></p>
-     <p><span class="google-civic-referendum-details-link"><?= $details ?></span></p>
+     <p><span class="google-civic-referendum-subtitle"><?php print $subtitle; ?></span></p>
+     <p><span class="google-civic-referendum-details-link"><?php print $details; ?></span></p>
    </div>
 </fieldset>

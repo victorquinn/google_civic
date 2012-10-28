@@ -10,12 +10,12 @@
 ?>
 
 <fieldset class='collapsible collapsed google-civic-candidate'>
-   <legend><span class='fieldset-legend'><?= $title ?></span></legend>
+   <legend><span class='fieldset-legend'><?php print $title; ?></span></legend>
    <div class='fieldset-wrapper'>
      <ul>
      <? foreach ($candidates as $candidate): ?>
        <li class='google-civic-candidate'>
-         <p><?= l("{$candidate->name} - {$candidate->party}", $candidate->candidateUrl) ?></p>
+         <p><?php print l("{$candidate->name} - {$candidate->party}", $candidate->candidateUrl); ?></p>
        </li>
      <? endforeach; ?>
      </ul>

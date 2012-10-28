@@ -6,18 +6,18 @@
 ?>
 
 <div id="google-civic-voterinfo-heading">
-  <?= $headline; ?>
+  <?php print $headline; ?>
 </div>
 <div id="google-civic-voterinfo">
   <?php if (!empty($locations)) : ?>
     <div id="google-civic-voterinfo-polling-locations">
-      <?= $locations; ?>
+      <?php print $locations; ?>
     </div>
   <?php else: ?>
-    <p><?= $sorry ?></p>
+    <p><?php print $sorry; ?></p>
     <div id="google-civic-address-form-div">
       <span class="google-civic-search-again">Please ensure your address is in the proper format and try again.</span>
-      <?= drupal_render($address_form); ?>
+      <?php print drupal_render($address_form); ?>
     </div>
   <?php endif; ?>
 
@@ -46,6 +46,6 @@
   <? if ($contests): ?>
     <h2>Contest Information</h2>
     <p>Below are the contests that are relevant to this polling location. Please expand for more info.</p>
-    <?= $contests ?>
+    <?php print $contests; ?>
   <? endif; ?>
 </div>
