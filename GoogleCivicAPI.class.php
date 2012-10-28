@@ -63,7 +63,33 @@ class GoogleCivicAPI {
     $resp = curl_exec($ch);
     curl_close($ch);
 
-    return json_decode($resp);
+    $answer = json_decode($resp);
+
+    if (!empty($answer->error) && $answer->error && is_object($answer->error)) {
+      $params = array(
+        '@code' => $answer->error->code,
+        '@message' => $answer->error->message,
+      );
+      watchdog('google_civic',
+        'Google Civic API error: code @code, message @message', $params,
+        WATCHDOG_ERROR);
+
+      if (is_array($answer->error->errors)) {
+        foreach ($answer->error->errors as $error) {
+          $params = array(
+            '@domain' => $error->domain,
+            '@reason' => $error->reason,
+            '@message' => $error->message,
+          );
+          watchdog('google_civic',
+            'Google Civic API error detail: ' .
+              'domain @domain, reason @reason, message @message',
+            $params, WATCHDOG_ERROR);
+        }
+      }
+    }
+
+    return $answer;
   }
 
   /**
@@ -93,4 +119,3 @@ class GoogleCivicAPI {
     return $this->request($url, $payload);
   }
 }
-
