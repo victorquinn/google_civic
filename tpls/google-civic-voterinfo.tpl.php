@@ -43,9 +43,9 @@
     </div>
   <?php endif; ?>
 
-  <? if ($contests): ?>
+  <?php if ($contests): ?>
     <h2>Contest Information</h2>
     <p>Below are the contests that are relevant to this polling location. Please expand for more info.</p>
     <?php print $contests; ?>
-  <? endif; ?>
+  <?php endif; ?>
 </div>

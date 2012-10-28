@@ -13,11 +13,11 @@
    <legend><span class='fieldset-legend'><?php print $title; ?></span></legend>
    <div class='fieldset-wrapper'>
      <ul>
-     <? foreach ($candidates as $candidate): ?>
+     <?php foreach ($candidates as $candidate): ?>
        <li class='google-civic-candidate'>
          <p><?php print l("{$candidate->name} - {$candidate->party}", $candidate->candidateUrl); ?></p>
        </li>
-     <? endforeach; ?>
+     <?php endforeach; ?>
      </ul>
    </div>
 </fieldset>
