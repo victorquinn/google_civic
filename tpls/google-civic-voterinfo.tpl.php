@@ -15,10 +15,12 @@
     </div>
   <?php else: ?>
     <p><?php print $sorry; ?></p>
+    <?php if (empty($contests)): ?>
     <div id="google-civic-address-form-div">
       <span class="google-civic-search-again">Please ensure your address is in the proper format and try again.</span>
       <?php print drupal_render($address_form); ?>
     </div>
+    <?php endif; ?>
   <?php endif; ?>
 
   <?php if ($map) : ?>
@@ -45,7 +47,7 @@
 
   <?php if ($contests): ?>
     <h2>Contest Information</h2>
-    <p>Below are the contests that are relevant to this polling location. Please expand for more info.</p>
+    <p>Below are the contests that are relevant to this address. Please expand each section for more info.</p>
     <?php print $contests; ?>
   <?php endif; ?>
 </div>

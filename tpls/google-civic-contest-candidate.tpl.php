@@ -15,7 +15,11 @@
      <ul>
      <?php foreach ($candidates as $candidate): ?>
        <li class='google-civic-candidate'>
-         <p><?php print l("{$candidate->name} - {$candidate->party}", $candidate->candidateUrl); ?></p>
+         <?php if (!empty($candidate->candidateUrl)): ?>
+           <p><?php print l("{$candidate->name} - {$candidate->party}", $candidate->candidateUrl); ?></p>
+         <?php else: ?>
+           <p><?php print "{$candidate->name} - {$candidate->party}"; ?></p>
+         <?php endif; ?>
        </li>
      <?php endforeach; ?>
      </ul>

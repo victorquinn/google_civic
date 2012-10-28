@@ -61,9 +61,6 @@ function google_civic_voterinfo() {
 
     $election_info_link = google_civic_voterinfo_response_get_link($response);
     $sorry = NULL;
-
-    $contests = variable_get('google_civic_show_contest_info', TRUE) ?
-      google_civic_contest_info($response->contests) : NULL;
   }
   else {
     $headline = NULL;
@@ -74,6 +71,14 @@ function google_civic_voterinfo() {
     $contests = NULL;
     $sorry = t("Sorry, no polling locations found for: %address",
              array('%address' => $address));
+  }
+
+  if (!empty($response->contests)) {
+    $contests = variable_get('google_civic_show_contest_info', TRUE) ?
+      google_civic_contest_info($response->contests) : NULL;
+  }
+  else {
+    $contests = NULL;
   }
 
   $variables = array(
